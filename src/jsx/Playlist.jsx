@@ -11,7 +11,9 @@ var Playlist = React.createClass({
   mixins: [AnimatedScroll],
 
   componentDidMount: function() {
-    console.log('mounting pl with', this.props.playlist);
+    window.addEventListener('resize', function(e){
+      console.log(e.target.scrollTop);
+    });
   },
 
   componentWillUpdate: function(nextProps) {

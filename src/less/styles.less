@@ -199,6 +199,8 @@ button {
     display: block;
     overflow-y: scroll;
 
+    transition: height 100ms ease-out;
+
     li {
       padding:6px;
       margin:6px 0;
@@ -278,6 +280,10 @@ button {
           background: darken(@accent, 17.5%);
         }
       }
+    }
+
+    li.old {
+      background: transparent;
     }
   }
 }

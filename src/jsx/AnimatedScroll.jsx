@@ -9,14 +9,19 @@ var AnimatedScroll = {
     //this.intervals = [];
   },
 
-  animatedScrollTo: function(element, to, duration) {
-      if (duration <= 0) return;
+  animatedScrollTo: function(element, to, duration, fn) {
+      if (duration <= 0) {
+        if(fn)
+          return fn();
+        return;
+      }
+
       var difference = to - element.scrollTop;
       var perTick = difference / duration * 10;
 
       setTimeout(function () {
           element.scrollTop = element.scrollTop + perTick;
-          AnimatedScroll.animatedScrollTo(element, to, duration - 10);
+          AnimatedScroll.animatedScrollTo(element, to, duration - 10, fn);
       }, 10);
   },
 

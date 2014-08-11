@@ -11,22 +11,52 @@ var Playlist = React.createClass({
   mixins: [AnimatedScroll],
 
   componentDidMount: function() {
-    window.addEventListener('resize', function(e){
-      console.log(e.target.scrollTop);
-    });
+    this.getDOMNode().addEventListener('scroll', this.growListOnScroll);
+  },
+
+  growListOnScroll: function(e){
+    var ho = (this.props.playlist.length - this.props.position) * 48 + 6;
+    var ha = parseInt(e.target.style.height);
+
+    e.target.style.height = ha + (this.getAutoScrollPosition() - (e.target.scrollTop + (ha - ho))) + 'px';
+
+    e.target.addEventListener('mouseout', this.resetScrollPosition, false);
   },
 
   componentWillUpdate: function(nextProps) {
     // noop
   },
 
-  componentDidUpdate: function() {
-     if(this.refs.playlist.getDOMNode()){
-       this.refs.playlist.getDOMNode().style.height = 48 * (this.props.playlist.length - this.props.position) + 6;
-       this.animatedScrollTo(this.refs.playlist.getDOMNode(), 52 * this.props.playlist.length, 150);
-       //this.refs.playlist.getDOMNode().scrollTop = 52 * this.props.playlist.length;
-     }
+  getAutoScrollPosition: function(){
+    return 48 * this.props.position;
+  },
 
+  resetScrollPosition: function(e){
+    if(e.relatedTarget.tagName !== 'TABLE'
+      && e.relatedTarget.tagName !== 'IFRAME'
+      && (e.relatedTarget.tagName !== 'DIV' || e.relatedTarget.attributes.id.value !== 'player-component'))
+      return;
+
+    this.ensureActiveSongOnTop();
+
+    return false;
+  },
+
+  componentDidUpdate: function() {
+    if(this.refs.playlist.getDOMNode()){
+      this.ensureActiveSongOnTop();
+    }
+  },
+
+  ensureActiveSongOnTop: function(){
+    var that = this;
+
+    this.getDOMNode().removeEventListener('scroll', this.growListOnScroll);
+
+    this.refs.playlist.getDOMNode().style.height = 48 * (this.props.playlist.length - this.props.position) + 6;
+    this.animatedScrollTo(this.refs.playlist.getDOMNode(), this.getAutoScrollPosition(), 150, function(){
+      that.getDOMNode().addEventListener('scroll', that.growListOnScroll);
+    });
   },
 
   handlePlayNow: function(pos, video){
@@ -42,12 +72,14 @@ var Playlist = React.createClass({
   render: function(){
     var playlistElements = this.props.playlist.map(function(video, i){
       var key = video.videoId + '_' + i;
+      var classNames = (i < this.props.position) ? 'old' :
+        (i === this.props.position) ? 'active' : 'queued';
 
       return (
         <PlaylistItem
           video={video}
           position={i}
-          active={i === this.props.position ? 'true' : ''}
+          classNames={classNames}
           key={key}
           handleDeleteEntry={this.handleDeleteEntry}
           handlePlayNow={this.handlePlayNow} />

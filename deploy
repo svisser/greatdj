@@ -1,0 +1,5 @@
+git pull
+
+gulp build
+cd components/fortawesome-font-awesome && component build
+

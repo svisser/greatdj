@@ -11,7 +11,8 @@ var ResultsComponent = React.createClass({
     return {
       playlist: [],
       position: -1,
-      playing: false
+      playing: false,
+      playlistToggled: false
     };
   },
 
@@ -84,9 +85,16 @@ var ResultsComponent = React.createClass({
     this.setState({playlist: pl, position: currPos});
   },
 
+  toggleFullPlaylist: function(){
+    var p = !this.state.playlistToggled;
+    this.setState({playlistToggled: p});
+  },
+
   noop: function(){},
 
   render: function() {
+    var btnClassName = 'playlist-toggle flat ' + (this.state.playlist.length && this.state.position ? '' : 'hide');
+    var icoClassName = this.state.playlistToggled ? 'fa fa-chevron-down' : 'fa fa-chevron-up';
     return (
       <div>
         <Player
@@ -97,11 +105,14 @@ var ResultsComponent = React.createClass({
           playing={this.noop} stopped={this.noop}
           ended={this.handleVideoEnded} />
 
+        <button className={btnClassName} ref="playlistToggle" onClick={this.toggleFullPlaylist} ><i className={icoClassName}></i></button>
+
         <Playlist
           playlist={this.state.playlist}
           position={this.state.position}
           handleDeleteEntry={this.handleDeleteEntry}
-          handlePlayNow={this.handlePlayNow} />
+          handlePlayNow={this.handlePlayNow}
+          playlistToggled={this.state.playlistToggled} />
       </div>
     );
   }

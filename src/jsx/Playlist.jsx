@@ -11,10 +11,10 @@ var Playlist = React.createClass({
   mixins: [AnimatedScroll],
 
   componentDidMount: function() {
-    this.getDOMNode().addEventListener('scroll', this.growListOnScroll);
+    //this.getDOMNode().addEventListener('scroll', this.growListOnScroll);
   },
 
-  growListOnScroll: function(e){
+  growListOnScroll: function(e){ // @deprecated
     var ho = (this.props.playlist.length - this.props.position) * 48 + 6;
     var ha = parseInt(e.target.style.height);
 
@@ -46,16 +46,19 @@ var Playlist = React.createClass({
     if(this.refs.playlist.getDOMNode()){
       this.ensureActiveSongOnTop();
     }
+
+    this.refs.playlist.getDOMNode().style.height = (this.props.playlistToggled) ?
+      48 * +this.props.playlist.length + 6 : 48 * (this.props.playlist.length - this.props.position) + 6;
   },
 
   ensureActiveSongOnTop: function(){
     var that = this;
 
-    this.getDOMNode().removeEventListener('scroll', this.growListOnScroll);
+    //this.getDOMNode().removeEventListener('scroll', this.growListOnScroll);
 
     this.refs.playlist.getDOMNode().style.height = 48 * (this.props.playlist.length - this.props.position) + 6;
     this.animatedScrollTo(this.refs.playlist.getDOMNode(), this.getAutoScrollPosition(), 150, function(){
-      that.getDOMNode().addEventListener('scroll', that.growListOnScroll);
+      //that.getDOMNode().addEventListener('scroll', that.growListOnScroll);
     });
   },
 

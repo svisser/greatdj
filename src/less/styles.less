@@ -27,6 +27,8 @@ span.it { font-style: italic; }
 
 table { font-size:1em; }
 
+.hide { display: none; }
+
 input[type="submit"],
 button {
   background: white;
@@ -60,6 +62,12 @@ button {
     &:active {
       box-shadow:inset 0 0 100px 100px rgba(0, 0, 0, 0.3);
     }
+  }
+
+  &.flat {
+    border:0;
+    background:transparent;
+
   }
 }
 
@@ -159,11 +167,11 @@ button {
            }
           &.descTd {
             padding-left:12px;
-            width:72%;
+            width:70%;
             vertical-align: top;
           }
           &.buttonTd {
-            width:13%;
+            width:15%;
             min-width:100px;
             text-align:right;
             button {
@@ -193,11 +201,26 @@ button {
     height: 250px;
   }
 
+  .playlist-toggle {
+    width:100%;
+    padding:5px 0;
+    color:#333;
+    //border:1px solid transparent;
+
+    &:hover {
+      color: black;
+      //border:1px solid @gray-borders
+    }
+    &:active {
+      box-shadow:inset 0 0 50px 50px rgba(0, 0, 0, 0.1);
+    }
+  }
+
   ul.playlist {
     list-style:none;
     margin:0; padding:0;
     display: block;
-    overflow-y: auto;
+    overflow: hidden;
 
     transition: height 100ms ease-out;
 
@@ -205,6 +228,7 @@ button {
       padding:6px;
       margin:6px 0;
       background: #fff;
+      height: 42px;
 
       &:hover {
        // background:@gray-borders;
@@ -234,9 +258,13 @@ button {
       span.title {
         font-size:0.9em;
         padding: 6px;
+        max-width:75%;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       span.bars {
+        overflow: hidden;
         &:active {
           background:transparent;
         }

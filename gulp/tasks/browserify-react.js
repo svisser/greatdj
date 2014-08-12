@@ -16,7 +16,10 @@ var reactify     = require('reactify');
 
 gulp.task('browserify-react', function() {
 
-  var bundler = watchify(browserify({
+  var fn = (global.isWatching) ? watchify : function(fn){ return fn; };
+  console.log(global.isWatching)
+
+  var bundler = fn(browserify({
     transform: ['reactify'],
     entries: ['./src/app.js'],
     extensions: ['.js', '.jsx'],
@@ -57,10 +60,10 @@ gulp.task('browserify-react', function() {
       .on('end', bundleLogger.end);
   };
 
- // if(global.isWatching) {
+  if(global.isWatching) {
     // Rebundle with watchify on changes.
     bundler.on('update', bundle);
- // }
+  }
 
   return bundle();
 });

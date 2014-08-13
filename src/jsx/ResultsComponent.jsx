@@ -86,6 +86,7 @@ var ResultsComponent = React.createClass({
   },
 
   toggleFullPlaylist: function(){
+    if(this.refs.playlistToggle.getDOMNode().classList.contains('disabled')) return;
     var p = !this.state.playlistToggled;
     this.setState({playlistToggled: p});
   },
@@ -93,7 +94,7 @@ var ResultsComponent = React.createClass({
   noop: function(){},
 
   render: function() {
-    var btnClassName = 'playlist-toggle flat ' + (this.state.playlist.length && this.state.position ? '' : 'hide');
+    var btnClassName = 'playlist-toggle flat ' + (!this.state.playlist.length ? 'hide' : (!this.state.position ? 'disabled' : ''));
     var icoClassName = this.state.playlistToggled ? 'fa fa-chevron-down' : 'fa fa-chevron-up';
     return (
       <div>

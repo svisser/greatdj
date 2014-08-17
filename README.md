@@ -7,7 +7,8 @@ Built using Facebook's React, Browserify, Gulp and some other friends.
 
 
 ## Demo
-http://greatdj.ruiramos.com (http://greatdj.ruiramos.com/)
+[http://greatdj.ruiramos.com] (http://greatdj.ruiramos.com/)
+Feel free to use it! :)
 
 ## Development
 

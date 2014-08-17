@@ -3,7 +3,7 @@ Killer playlists for parties!
 Allows you to create playlists on the fly, with a search component that doesn't affect the currently playing song.
 Only supports YouTube for now, but might support SoundCloud and others in the near future.
 
-Built using Facebook's React, Browserify, Gulp and other friends.
+Built using Facebook's React, Browserify, Gulp and some other friends.
 
 
 ## Demo

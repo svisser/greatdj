@@ -32,7 +32,7 @@ In order to run it locally you'll need to:
     $ gulp
     ```
 
-* To test your project, start the development server on the root directory like [http-server](https://www.npmjs.org/package/http-server) and open `http://localhost:8080`.
+* To test your project, start a development server like [http-server](https://www.npmjs.org/package/http-server) on the root directory and open `http://localhost:8080`.
 
 
 * To build the distribution files before releasing a new version.

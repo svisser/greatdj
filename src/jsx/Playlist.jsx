@@ -14,6 +14,10 @@ var Playlist = React.createClass({
     return 48 * this.props.position;
   },
 
+  componentDidMount: function(){
+    this.getDOMNode().addEventListener('dragend', this.handleDragEnd, false);
+  },
+
   componentWillReceiveProps: function(newProps){
     // If deleting an item and playlist in condensed mode, got to disable the height transition otherwise
     // the element disappear straights away and the playlist shows one more top item (before the scroll/height animation kick in)
@@ -52,6 +56,13 @@ var Playlist = React.createClass({
 
   switchPlaylistItems: function(from, to){
     this.props.switchPlaylistItems(from, to);
+  },
+
+  handleDragEnd: function(){
+    var els = document.querySelectorAll('.dragged-over');
+    Array.prototype.slice.apply(els).forEach(function(el){
+      el.classList.remove('dragged-over');
+    })
   },
 
   render: function(){

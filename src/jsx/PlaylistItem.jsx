@@ -62,8 +62,8 @@ var PlaylistItem = React.createClass({
   },
 
   handleDragEnd: function(){
-    //if(this.getDOMNode().classList.contains('dragged-over'))
-    //this.getDOMNode().classList.remove('dragged-over');
+    // if(this.getDOMNode().classList.contains('dragged-over'))
+    //   this.getDOMNode().classList.remove('dragged-over');
     //var lis = Array.prototype.slice.call(this.getDOMNode().parentElement.querySelectorAll('li[draggable]'));
     //lis.forEach(function(el){ el.classList.remove('dragged-over'); });
   },

@@ -99,6 +99,10 @@ button {
       font-weight: 600;
       font-size: 1em;
       line-height: 32px;
+      a {
+        color: white;
+        text-decoration: none;
+      }
     }
 
     input[type="text"] {
@@ -169,6 +173,13 @@ button {
             padding-left:12px;
             width:70%;
             vertical-align: top;
+            a {
+              color: black;
+              text-decoration: none;
+              &:hover {
+                color:#666;
+              }
+            }
           }
           &.buttonTd {
             width:15%;
@@ -295,7 +306,7 @@ button {
         width:100%;
         left:0;
         bottom:-10px;
-        height: 24px;
+        height:24px;
         background:transparent;
       }
 

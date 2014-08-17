@@ -30,9 +30,7 @@ var ResultsComponent = React.createClass({
       var playlist = that.state.playlist,
           currPos = that.state.position;
 
-      console.log(playlist)
       playlist.splice(currPos + 1, 0, e.detail);
-      console.log(playlist)
       that.setState({playlist: playlist});
 
       that.playVideoByPos(currPos + 1);
@@ -108,12 +106,9 @@ var ResultsComponent = React.createClass({
     if(fromIndex === toIndex) return;
 
     var newToIndex = (toIndex < fromIndex) ? +toIndex + 1 : toIndex;
-    console.log(fromIndex, toIndex, newToIndex)
 
     var from = pl.splice(fromIndex, 1)[0];
     pl.splice(newToIndex, 0, from);
-
-    console.log(this.state.position)
 
     if (this.state.position === fromIndex){
       newPos = newToIndex;
@@ -122,8 +117,6 @@ var ResultsComponent = React.createClass({
     } else if(fromIndex > this.state.position && this.state.position > toIndex){
       newPos++;
     }
-
-    console.log(pl, newPos);
 
     this.setState({playlist: pl, position: newPos});
 

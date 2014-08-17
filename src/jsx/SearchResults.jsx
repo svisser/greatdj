@@ -38,6 +38,13 @@ var SearchResults = React.createClass({
       )
     }, this)
 
+    console.log(resultsList)
+    if(!resultsList.length){
+      resultsList = (
+        <tr className="initResults"><td>Search using the component above!</td></tr>
+      )
+    }
+
     return (
       <div className="results-containter">
         <table className="results">

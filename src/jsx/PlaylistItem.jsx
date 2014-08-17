@@ -62,10 +62,7 @@ var PlaylistItem = React.createClass({
   },
 
   handleDragEnd: function(){
-    // if(this.getDOMNode().classList.contains('dragged-over'))
-    //   this.getDOMNode().classList.remove('dragged-over');
-    //var lis = Array.prototype.slice.call(this.getDOMNode().parentElement.querySelectorAll('li[draggable]'));
-    //lis.forEach(function(el){ el.classList.remove('dragged-over'); });
+    // ?
   },
 
   //
@@ -90,7 +87,7 @@ var PlaylistItem = React.createClass({
         <span className="bars"><i className="fa fa-bars"></i></span>
         <span className="title" onClick={this.handlePlayNow}>{ this.props.video.title }</span>
         <span className="delete" onClick={this.handleDeleteEntry}><i className="fa fa-trash-o"></i></span>
-        <span className="drop-zone">&nbsp;</span>
+        <span className="drop-zone"></span>
       </li>
     );
   }

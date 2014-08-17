@@ -1,5 +1,5 @@
 git pull
-
+npm install
 gulp build
 cd components/fortawesome-font-awesome && component build
 

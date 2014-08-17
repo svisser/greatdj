@@ -203,7 +203,7 @@ button {
 
   .playlist-toggle {
     width:100%;
-    padding:5px 0;
+    padding:5px 0 0;
     color:#333;
     //border:1px solid transparent;
 
@@ -227,13 +227,15 @@ button {
     display: block;
     overflow: hidden;
 
-    transition: height 150ms linear;
+    transition: height 250ms ease-out;
 
     li {
-      padding:6px;
+      padding:6px 0 0;
       margin:6px 0;
       background: #fff;
       height: 42px;
+      border-bottom:4px solid transparent;
+      position:relative;
 
       &:hover {
        // background:@gray-borders;
@@ -287,10 +289,20 @@ button {
         }
       }
 
+      span.drop-zone {
+        display: inline-block;
+        position: absolute;
+        width:100%;
+        left:0;
+        bottom:-10px;
+        height: 24px;
+        background:transparent;
+      }
+
     }
 
-    li.dragging {
-      border-bottom:2px solid @red;
+    li.dragged-over {
+      border-bottom:4px solid @primary;
     }
 
     li.active {

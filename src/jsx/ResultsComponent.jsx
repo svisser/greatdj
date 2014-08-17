@@ -91,6 +91,44 @@ var ResultsComponent = React.createClass({
     this.setState({playlistToggled: p});
   },
 
+  // ------
+  // ------ f
+  // xxxxxx
+  // ------
+  // ------ t
+  //        (f)
+  // ------
+  switchPlaylistItems: function(fromIndex, toIndex){
+    var pl = this.state.playlist,
+        moving = this.state.playlist[fromIndex],
+        newPos = this.state.position,
+        fromIndex = +fromIndex,
+        toIndex = +toIndex;
+
+    if(fromIndex === toIndex) return;
+
+    var newToIndex = (toIndex < fromIndex) ? +toIndex + 1 : toIndex;
+    console.log(fromIndex, toIndex, newToIndex)
+
+    var from = pl.splice(fromIndex, 1)[0];
+    pl.splice(newToIndex, 0, from);
+
+    console.log(this.state.position)
+
+    if (this.state.position === fromIndex){
+      newPos = newToIndex;
+    } else if(fromIndex < this.state.position && this.state.position <= toIndex){
+      newPos--;
+    } else if(fromIndex > this.state.position && this.state.position > toIndex){
+      newPos++;
+    }
+
+    console.log(pl, newPos);
+
+    this.setState({playlist: pl, position: newPos});
+
+  },
+
   noop: function(){},
 
   render: function() {
@@ -104,16 +142,18 @@ var ResultsComponent = React.createClass({
           position={this.state.position}
           type={this.state.type}
           playing={this.noop} stopped={this.noop}
-          ended={this.handleVideoEnded} />
+          ended={this.handleVideoEnded}
+          switchPlaylistItems={this.props.switchPlaylistItems} />
 
         <button className={btnClassName} ref="playlistToggle" onClick={this.toggleFullPlaylist} ><i className={icoClassName}></i></button>
 
         <Playlist
           playlist={this.state.playlist}
           position={this.state.position}
+          playlistToggled={this.state.playlistToggled}
+          switchPlaylistItems={this.switchPlaylistItems}
           handleDeleteEntry={this.handleDeleteEntry}
-          handlePlayNow={this.handlePlayNow}
-          playlistToggled={this.state.playlistToggled} />
+          handlePlayNow={this.handlePlayNow} />
       </div>
     );
   }

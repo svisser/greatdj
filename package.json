@@ -24,6 +24,7 @@
     "react": "~0.11.1",
     "reactify": "~0.14.0",
     "require-sdk": "0.0.2",
-    "superagent": "~0.18.2"
+    "superagent": "~0.18.2",
+    "domquery": "~1.2.0"
   }
 }

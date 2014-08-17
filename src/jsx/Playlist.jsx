@@ -15,13 +15,12 @@ var Playlist = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps){
-    if(this.playlistCount > this.props.playlist.length && !this.props.playlistToggled && this.props.position){ //deleting
-      console.log(document.querySelector('ul.playlist').style.transition)
+    // If deleting an item and playlist in condensed mode, got to disable the height transition otherwise
+    // the element disappear straights away and the playlist shows one more top item (before the scroll/height animation kick in)
+    if(this.playlistCount > this.props.playlist.length && !this.props.playlistToggled && this.props.position){
       document.querySelector('ul.playlist').style.transition = "none";
-      console.log(document.querySelector('ul.playlist').style.transition)
-
     } else {
-      document.querySelector('ul.playlist').style.transition = "height 150ms ease-out";
+      document.querySelector('ul.playlist').style.transition = "height 250ms ease-out";
     }
   },
 
@@ -38,7 +37,7 @@ var Playlist = React.createClass({
     var that = this;
 
     this.refs.playlist.getDOMNode().style.height = 48 * (this.props.playlist.length - this.props.position) + 6;
-    this.animatedScrollTo(this.refs.playlist.getDOMNode(), this.getAutoScrollPosition(), 175);
+    this.animatedScrollTo(this.refs.playlist.getDOMNode(), this.getAutoScrollPosition(), 275);
   },
 
   handlePlayNow: function(pos, video){
@@ -51,8 +50,13 @@ var Playlist = React.createClass({
     return false;
   },
 
+  switchPlaylistItems: function(from, to){
+    this.props.switchPlaylistItems(from, to);
+  },
+
   render: function(){
     this.playlistCount = this.props.playlist.length;
+
     var playlistElements = this.props.playlist.map(function(video, i){
       var key = video.videoId + '_' + i;
       var classNames = (i < this.props.position) ? 'old' :
@@ -65,7 +69,8 @@ var Playlist = React.createClass({
           classNames={classNames}
           key={key}
           handleDeleteEntry={this.handleDeleteEntry}
-          handlePlayNow={this.handlePlayNow} />
+          handlePlayNow={this.handlePlayNow}
+          switchPlaylistItems={this.switchPlaylistItems} />
       );
     }, this);
 

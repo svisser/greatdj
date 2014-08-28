@@ -2,15 +2,13 @@
  * @jsx React.DOM
  */
 
-var React = require('react');
-var Player = require('./Player');
-var Playlist = require('./Playlist');
+var React = require('react'),
+    Player = require('./Player'),
+    Playlist = require('./Playlist');
 
 var ResultsComponent = React.createClass({
   getInitialState: function() {
     return {
-      playlist: [],
-      position: -1,
       playing: false,
       playlistToggled: false
     };
@@ -20,18 +18,18 @@ var ResultsComponent = React.createClass({
     var that = this;
 
     window.addEventListener('enqueue', function(e){
-      var playlist = that.state.playlist;
+      var playlist = that.props.playlist;
       playlist.push(e.detail);
-      that.setState({playlist: playlist});
+      that.props.setPlaylist(playlist);
       that.handlePlaylistAdd(playlist);
     }, false);
 
     window.addEventListener('playNow', function(e){
-      var playlist = that.state.playlist,
-          currPos = that.state.position;
+      var playlist = that.props.playlist,
+          currPos = that.props.position;
 
       playlist.splice(currPos + 1, 0, e.detail);
-      that.setState({playlist: playlist});
+      that.props.setPlaylist(playlist);
 
       that.playVideoByPos(currPos + 1);
     }, false);
@@ -39,28 +37,30 @@ var ResultsComponent = React.createClass({
 
 
   handlePlaylistAdd: function(newPlaylist){
-    var pos = this.state.position;
+    var pos = this.props.position;
     if(pos < newPlaylist.length && !this.state.playing){
       this.playVideoByPos(pos + 1);
     }
   },
 
   handleVideoEnded: function(){
-    var pos = this.state.position + 1,
-        pl = this.state.playlist;
+    var pos = this.props.position + 1,
+        pl = this.props.playlist;
     if(pos < pl.length){
-      this.setState({videoId: pl[pos].videoId, type: 'youtube', position: pos});
+      this.setState({videoId: pl[pos].videoId, type: 'youtube'});
+      this.props.setPosition(pos);
     } else {
       this.setState({playing: false});
     }
   },
 
   playVideoByPos: function(pos){
-    this.setState({videoId: this.state.playlist[pos].videoId, type: 'youtube', position: pos, playing: true});
+    this.props.setPosition(pos);
+    this.setState({videoId: this.props.playlist[pos].videoId, type: 'youtube', playing: true});
   },
 
   handlePlayNow: function(pos, video){
-    if(pos !== this.state.position){
+    if(pos !== this.props.position){
       this.playVideoByPos(pos);
     } else {
       // clicked on the currently playing video
@@ -69,8 +69,8 @@ var ResultsComponent = React.createClass({
   },
 
   handleDeleteEntry: function(pos, video){
-    var pl = this.state.playlist,
-        currPos = this.state.position;
+    var pl = this.props.playlist,
+        currPos = this.props.position;
 
     // if deleting from history, decrease the position of the playing video on the playlist
     if(pos < currPos){
@@ -80,7 +80,8 @@ var ResultsComponent = React.createClass({
     // remove the element from the playlist
     pl.splice(pos, 1);
 
-    this.setState({playlist: pl, position: currPos});
+    this.props.setPlaylist(pl);
+    this.props.setPosition(currPos);
   },
 
   toggleFullPlaylist: function(){
@@ -97,9 +98,9 @@ var ResultsComponent = React.createClass({
   //        (f)
   // ------
   switchPlaylistItems: function(fromIndex, toIndex){
-    var pl = this.state.playlist,
-        moving = this.state.playlist[fromIndex],
-        newPos = this.state.position,
+    var pl = this.props.playlist,
+        moving = this.props.playlist[fromIndex],
+        newPos = this.props.position,
         fromIndex = +fromIndex,
         toIndex = +toIndex;
 
@@ -110,39 +111,41 @@ var ResultsComponent = React.createClass({
     var from = pl.splice(fromIndex, 1)[0];
     pl.splice(newToIndex, 0, from);
 
-    if (this.state.position === fromIndex){
+    if (this.props.position === fromIndex){
       newPos = newToIndex;
-    } else if(fromIndex < this.state.position && this.state.position <= toIndex){
+    } else if(fromIndex < this.props.position && this.props.position <= toIndex){
       newPos--;
-    } else if(fromIndex > this.state.position && this.state.position > toIndex){
+    } else if(fromIndex > this.props.position && this.props.position > toIndex){
       newPos++;
     }
 
-    this.setState({playlist: pl, position: newPos});
+    this.props.setPosition(newPos);
+    this.props.setPlaylist(pl);
 
   },
 
   noop: function(){},
 
   render: function() {
-    var btnClassName = 'playlist-toggle flat ' + (!this.state.playlist.length ? 'hide' : (!this.state.position ? 'disabled' : ''));
+    var btnClassName = 'playlist-toggle flat ' + (!this.props.playlist.length ? 'hide' : (!this.props.position ? 'disabled' : ''));
     var icoClassName = this.state.playlistToggled ? 'fa fa-chevron-down' : 'fa fa-chevron-up';
     return (
       <div>
         <Player
           autoplay="true"
           videoId={this.state.videoId}
-          position={this.state.position}
+          position={this.props.position}
           type={this.state.type}
           playing={this.noop} stopped={this.noop}
           ended={this.handleVideoEnded}
-          switchPlaylistItems={this.props.switchPlaylistItems} />
+          switchPlaylistItems={this.props.switchPlaylistItems}
+          playerReady={this.props.onPlayerReady}/>
 
         <button className={btnClassName} ref="playlistToggle" onClick={this.toggleFullPlaylist} ><i className={icoClassName}></i></button>
 
         <Playlist
-          playlist={this.state.playlist}
-          position={this.state.position}
+          playlist={this.props.playlist}
+          position={this.props.position}
           playlistToggled={this.state.playlistToggled}
           switchPlaylistItems={this.switchPlaylistItems}
           handleDeleteEntry={this.handleDeleteEntry}
@@ -153,10 +156,10 @@ var ResultsComponent = React.createClass({
 
 });
 
-React.renderComponent(
-  <ResultsComponent />,
-  document.getElementById('player-component')
-);
+// React.renderComponent(
+//   <ResultsComponent />,
+//   document.getElementById('player-component')
+// );
 
 
 module.exports = ResultsComponent;

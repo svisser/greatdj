@@ -1,10 +1,11 @@
 window.React = require('react');
 
-require('./jsx/Playlist');
-require('./jsx/PlaylistItem');
-require('./jsx/Player');
-require('./jsx/ResultsComponent');
-require('./jsx/SearchComponent');
-require('./jsx/SearchResults');
+document.write('<html><head><//head><body></body></html>');
 
-require('./jsx/AnimatedScroll');
+// head
+document.querySelector('head').innerHTML += '<title>GREATDJ!</title><meta name="viewport" content="width=device-width, user-scalable=no">';
+// body (app root)
+document.querySelector('body').appendChild(document.createElement('div')).setAttribute('id', 'app');
+
+require('./jsx/StateHandler');
+

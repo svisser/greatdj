@@ -71,7 +71,8 @@ var PlaylistItem = React.createClass({
     this.getDOMNode().classList.remove('dragged-over');
   },
 
-  handlePlayNow: function(){
+  handlePlayNow: function(e){
+    if(e.target.tagName === 'SPAN' && e.target.classList.contains('delete')) return;
     this.props.handlePlayNow(this.props.position, this.props.video);
     return false;
   },

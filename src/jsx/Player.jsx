@@ -40,7 +40,7 @@ var Player = React.createClass({
   componentWillUpdate: function(nextProps) {
     if (this.props.videoId !== nextProps.videoId) {
       this._loadNewUrl(nextProps.videoId);
-    } else if (this.props.position !== nextProps.position && !this.state.player.getPlayerState()){
+    } else if (this.props.position !== nextProps.position && this.state.player.getPlayerState && !this.state.player.getPlayerState()){
       this._loadNewUrl(nextProps.videoId);
     }
   },

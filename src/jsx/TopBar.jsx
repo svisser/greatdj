@@ -86,6 +86,9 @@ var TopBar = React.createClass({
     } else if(e.keyCode === 13 && this.state.selected >= 0){ //enter
       this.setQuery(this.state.complete[this.state.selected][0]);
       return false;
+    } else if(e.keyCode === 27){ //esc
+      this.setState({complete: [], selected: -1});
+      return false;
     }
   },
 
@@ -104,10 +107,7 @@ var TopBar = React.createClass({
         <input type="text" className="q" ref="query" onChange={this.handleInputChange} onKeyDown={this.handleInputKeyDown} />
         <input type="submit" value="Search" />
         <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>
-
-        {/*
-          <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>
-          */}
+        <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>
 
         <AutoComplete
           complete={this.state.complete}

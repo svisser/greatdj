@@ -132,8 +132,8 @@ button {
       width: 80px;
       margin-left: -2px;
       border:1px solid #cfcfcf;
-      background: #fafafa;
-      border-left:1px solid #fafafa;
+      background: @gray-lightest;
+      border-left:1px solid @gray-lightest;
       border-radius:2px;
       position: relative;
       top: -1px;
@@ -261,14 +261,28 @@ button {
   padding:20px;
   width:35%;
   margin-top:@searchbar-height;
-  background:#fafafa;
+  background:@gray-lightest;
 
-  #youtube-player {
-    margin:0px auto;
-    display:block;
-    width: 100%;
-    height: 250px;
+  .youtube-player-container {
+    position: relative;
+
+    .curtain {
+      background: @gray-lightest;
+      opacity: 0.85;
+      width: 100%;
+      height: 250px;
+      position: absolute;
+    }
+
+    #youtube-player {
+      margin:0px auto;
+      display:block;
+      width: 100%;
+      height: 250px;
+    }
   }
+
+
 
   .playlist-toggle {
     width:100%;

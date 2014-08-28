@@ -49,6 +49,8 @@ var Player = React.createClass({
     this.props.autoplay
       ? this.state.player.loadVideoById(videoId, 0)
       : this.state.player.cueVideoById(videoId);
+
+    this.refs.curtain.getDOMNode().style.display = 'none';
   },
 
   _restartCurrentVideo: function(){
@@ -76,8 +78,9 @@ var Player = React.createClass({
 
   render: function() {
     return (
-      <div id="youtube-player">
-        <div></div>
+      <div className="youtube-player-container">
+        <div className="curtain" ref="curtain"></div>
+        <div id="youtube-player"></div>
       </div>
     );
   }

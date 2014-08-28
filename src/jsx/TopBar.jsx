@@ -63,7 +63,7 @@ var TopBar = React.createClass({
         script.setAttribute("src", youtubeCompleteUrl+q);
         document.head.appendChild(script);
       } else {
-        that.setState({complete: []});
+        that.setState({complete: [], selected: -1});
       }
 
     }, 250);

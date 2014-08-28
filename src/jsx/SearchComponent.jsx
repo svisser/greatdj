@@ -7,6 +7,7 @@ var request = require('superagent');
 
 var SearchResults = require('./SearchResults');
 var ResultsComponent = require('./ResultsComponent');
+var TopBar = require('./TopBar');
 
 var API_KEY = 'AIzaSyBtZzG2fInuoAsvrLfYi9jIsLgSdoE4JTs';
 
@@ -34,13 +35,9 @@ var SearchComponent = React.createClass({
     window.dispatchEvent(evt);
   },
 
-  handleSubmit: function(e){
-    e.preventDefault();
-
-    var q = this.refs.query.getDOMNode().value.trim(),
-        that = this;
-
-    var videoDef = this.refs.hd.getDOMNode().checked ? 'high' : 'any';
+  handleSubmit: function(q, hdOnly){
+    var that = this,
+        videoDef = hdOnly ? 'high' : 'any';
 
     request
       .get('https://www.googleapis.com/youtube/v3/search')
@@ -61,24 +58,13 @@ var SearchComponent = React.createClass({
   render: function() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <span className="logo"><a href="/">GREAT DJ<span className="it">!</span></a></span>
-          <input type="text" ref="query" />
-          <input type="submit" value="Search" />
-          <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>
-
-          <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>
-        </form>
+        <TopBar handleSubmit={this.handleSubmit} handleSavePlaylist={this.props.handleSavePlaylist} />
         <SearchResults videos={this.props.results} enqueueHandler={this.videoEnqueued} playNowHandler={this.playNowHandler} />
       </div>
     );
   },
 });
 
-// React.renderComponent(
-//   <SearchComponent />,
-//   document.getElementById('search-component')
-// );
 
 module.exports = SearchComponent;
 

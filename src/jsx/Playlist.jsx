@@ -20,7 +20,7 @@ var Playlist = React.createClass({
 
   componentWillReceiveProps: function(newProps){
     // If deleting an item and playlist in condensed mode, got to disable the height transition otherwise
-    // the element disappear straights away and the playlist shows one more top item (before the scroll/height animation kick in)
+    // the element disappear straights away and the playlist shows one more top item (before the scroll/height animation kicks in)
     if(this.playlistCount > this.props.playlist.length && !this.props.playlistToggled && this.props.position){
       document.querySelector('ul.playlist').style.transition = "none";
     } else {
@@ -29,7 +29,7 @@ var Playlist = React.createClass({
   },
 
   componentDidUpdate: function() {
-    if(this.refs.playlist.getDOMNode() && !this.props.playlistToggled){
+    if(this.refs.playlist.getDOMNode() && !this.props.playlistToggled && this.props.playlist.length){
       this.ensureActiveSongOnTop();
     }
 

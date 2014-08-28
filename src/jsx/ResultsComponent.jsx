@@ -156,10 +156,5 @@ var ResultsComponent = React.createClass({
 
 });
 
-// React.renderComponent(
-//   <ResultsComponent />,
-//   document.getElementById('player-component')
-// );
-
 
 module.exports = ResultsComponent;

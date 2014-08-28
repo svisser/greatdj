@@ -86,7 +86,7 @@ var PlaylistItem = React.createClass({
     return (
       <li draggable="true" onClick={this.handlePlayNow} className={this.props.classNames} data-pos={this.props.position}>
         <span className="bars"><i className="fa fa-bars"></i></span>
-        <span className="title" onClick={this.handlePlayNow}>{ this.props.video.title }</span>
+        <span className="title">{ this.props.video.title }</span>
         <span className="delete" onClick={this.handleDeleteEntry}><i className="fa fa-trash-o"></i></span>
         <span className="drop-zone"></span>
       </li>

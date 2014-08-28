@@ -107,7 +107,6 @@ var TopBar = React.createClass({
         <input type="text" className="q" ref="query" onChange={this.handleInputChange} onKeyDown={this.handleInputKeyDown} />
         <input type="submit" value="Search" />
         <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>
-        <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>
 
         <AutoComplete
           complete={this.state.complete}

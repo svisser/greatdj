@@ -14,7 +14,8 @@ var StateHandler = React.createClass({
     return {
       playlist: [],
       results: [],
-      position: -1
+      position: -1,
+      playlistId: null
     }
   },
 
@@ -31,12 +32,19 @@ var StateHandler = React.createClass({
     }
   },
 
+  componentWillUpdate: function(nextProps, nextState){
+    if(nextState.playlistId !== this.state.playlistId){
+      history.pushState(null, null, '/#'+nextState.playlistId);
+    }
+  },
+
   setResults: function(res){
     this.setState({results: res});
   },
 
   setPlaylist: function(pl){
-    this.setState({playlist: pl});
+    var playlistId = this.state.playlistId || Math.random().toString(36).slice(2); // revisit
+    this.setState({playlist: pl, playlistId: playlistId});
   },
 
   setPosition: function(p){
@@ -45,7 +53,9 @@ var StateHandler = React.createClass({
 
   playerReady: function(){
     console.log('player ready')
-    this.setPosition(0);
+    if(this.state.playlist.length){
+      this.setPosition(0);
+    }
   },
 
   handleSavePlaylist: function(){
@@ -88,3 +98,4 @@ React.renderComponent(
 );
 
 module.exports = StateHandler;
+

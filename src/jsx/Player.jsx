@@ -25,6 +25,7 @@ var Player = React.createClass({
       var player = new youtube.Player("youtube-player", {
         videoId: that.props.videoId,
         events: {
+          'onReady': that.props.playerReady,
           'onStateChange': that._handlePlayerStateChange
         }
       });
@@ -37,7 +38,7 @@ var Player = React.createClass({
     });
   },
 
-  componentWillUpdate: function(nextProps) {
+  componentWillUpdate: function(nextProps, nextState) {
     if (this.props.videoId !== nextProps.videoId) {
       this._loadNewUrl(nextProps.videoId);
     } else if (this.props.position !== nextProps.position && this.state.player.getPlayerState && !this.state.player.getPlayerState()){

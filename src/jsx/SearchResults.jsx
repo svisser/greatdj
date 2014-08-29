@@ -40,7 +40,7 @@ var SearchResults = React.createClass({
 
     if(!resultsList.length){
       resultsList = (
-        <tr className="initResults"><td>Search using the component above!</td></tr>
+        <tr className="initResults"><td>Search for music videos using the textbox above<span className="it">!</span></td></tr>
       )
     }
 

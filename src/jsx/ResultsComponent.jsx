@@ -35,6 +35,11 @@ var ResultsComponent = React.createClass({
     }, false);
   },
 
+  componentDidUpdate: function(oldProps){
+    if(this.props.position !== oldProps.position){
+      this.playVideoByPos(this.props.position);
+    }
+  },
 
   handlePlaylistAdd: function(newPlaylist){
     var pos = this.props.position;

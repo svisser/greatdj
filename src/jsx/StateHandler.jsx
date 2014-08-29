@@ -27,14 +27,14 @@ var StateHandler = React.createClass({
       // do a server request with url.hash
       var res = [];
 
-      res=JSON.parse('[{"type":"youtube","title":"Beyoncé - Pretty Hurts","videoId":"LXXQLa-5n5w"},{"type":"youtube","title":"Beyoncé - Drunk in Love (Explicit) ft. JAY Z","videoId":"p1JPKLa-Ofc"},{"type":"youtube","title":"Beyoncé - Partition (Explicit Video)","videoId":"pZ12_E5R3qc"},{"type":"youtube","title":"Beyoncé - XO","videoId":"3xUfCUFPL-8"},{"type":"youtube","title":"Beyoncé - Run the World (Girls)","videoId":"VBmMU_iwe6U"},{"type":"youtube","title":"Beyoncé - Halo","videoId":"bnVUHWCynig"},{"type":"youtube","title":"Beyoncé - Love On Top","videoId":"Ob7vObnFUJc"}]');
-      this.setPlaylist(res);
+      //res=JSON.parse('[{"type":"youtube","title":"Beyoncé - Pretty Hurts","videoId":"LXXQLa-5n5w"},{"type":"youtube","title":"Beyoncé - Drunk in Love (Explicit) ft. JAY Z","videoId":"p1JPKLa-Ofc"},{"type":"youtube","title":"Beyoncé - Partition (Explicit Video)","videoId":"pZ12_E5R3qc"},{"type":"youtube","title":"Beyoncé - XO","videoId":"3xUfCUFPL-8"},{"type":"youtube","title":"Beyoncé - Run the World (Girls)","videoId":"VBmMU_iwe6U"},{"type":"youtube","title":"Beyoncé - Halo","videoId":"bnVUHWCynig"},{"type":"youtube","title":"Beyoncé - Love On Top","videoId":"Ob7vObnFUJc"}]');
+      //this.setPlaylist(res);
     }
   },
 
   componentWillUpdate: function(nextProps, nextState){
     if(nextState.playlistId !== this.state.playlistId){
-      history.pushState(null, null, '/#'+nextState.playlistId);
+      //history.pushState(null, null, '/#'+nextState.playlistId);
     }
   },
 

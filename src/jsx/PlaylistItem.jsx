@@ -21,7 +21,7 @@ var PlaylistItem = React.createClass({
   // Drag and Drop
   handleDragStart: function(e){
     e.dataTransfer.setData('text/plain', this.props.position);
-    setTimeout(function(){e.target.classList.add('dragged');}, 100);
+    setTimeout(function(){e.target.classList.add('dragged');}, 10);
   },
 
   handleDragOver: function(e){
@@ -65,7 +65,6 @@ var PlaylistItem = React.createClass({
   },
 
   handleDragEnd: function(e){
-    console.log(e.target, e.toElement);
     e.target.classList.remove('dragged');
     //
   },

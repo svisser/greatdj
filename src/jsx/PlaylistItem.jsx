@@ -21,6 +21,7 @@ var PlaylistItem = React.createClass({
   // Drag and Drop
   handleDragStart: function(e){
     e.dataTransfer.setData('text/plain', this.props.position);
+    setTimeout(function(){e.target.classList.add('dragged');}, 100);
   },
 
   handleDragOver: function(e){
@@ -53,6 +54,8 @@ var PlaylistItem = React.createClass({
     var target = e.target.tagName === "LI" ? e.target : dom(e.target).parent('li[draggable]')[0];
 
     if(target) {
+      target.classList.remove('animate-margin');
+      setTimeout(function(){target.classList.add('animate-margin');}, 100);
       this.props.switchPlaylistItems(e.dataTransfer.getData('text/plain'), target.attributes['data-pos'].value);
     } else {
       console.log('bode', e.target)
@@ -61,7 +64,9 @@ var PlaylistItem = React.createClass({
     return false;
   },
 
-  handleDragEnd: function(){
+  handleDragEnd: function(e){
+    console.log(e.target, e.toElement);
+    e.target.classList.remove('dragged');
     //
   },
 
@@ -84,7 +89,7 @@ var PlaylistItem = React.createClass({
 
   render: function() {
     return (
-      <li draggable="true" onClick={this.handlePlayNow} className={this.props.classNames} data-pos={this.props.position}>
+      <li draggable="true" onClick={this.handlePlayNow} className={this.props.classNames + ' animate-margin'} data-pos={this.props.position}>
         <span className="bars"><i className="fa fa-bars"></i></span>
         <span className="title">{ this.props.video.title }</span>
         <span className="delete" onClick={this.handleDeleteEntry}><i className="fa fa-trash-o"></i></span>

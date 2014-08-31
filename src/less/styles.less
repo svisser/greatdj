@@ -330,8 +330,12 @@ button {
       border-bottom: 1px solid #eaeaea;
       border-right: 1px solid #eaeaea;
 
-      transition: margin-bottom 150ms ease-out;
+      transition: height 300ms ease-out;
 
+
+      &.animate-margin {
+        transition: margin-bottom 250ms ease-out, height 300ms ease-out;
+      }
 
       &:hover {
        // background:@gray-borders;
@@ -435,7 +439,13 @@ button {
       background: transparent;
       border-bottom: 0px;
       border-right: 0px;
+    }
 
+    li.dragged {
+      //display:none;
+      height: 3px;
+      opacity:0.75;
+      overflow:hidden;
     }
   }
 }

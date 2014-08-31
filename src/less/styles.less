@@ -38,8 +38,10 @@ span.it { font-style: italic; }
 table { font-size:1em; }
 
 .hide { display: none; }
+.mobile { display: none  !important; }
 
 #app { overflow: auto; }
+
 
 input[type="submit"],
 button {
@@ -436,4 +438,19 @@ button {
 
     }
   }
+}
+
+@media only screen
+    and (max-device-width : 700px){
+
+.desktop { display: none  !important; }
+
+#search-component {
+  width: 100%;
+
+}
+
+#player-component { width: 100%; }
+
+
 }

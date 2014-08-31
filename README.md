@@ -1,9 +1,9 @@
 Killer playlists for parties!
 
-Allows you to create playlists on the fly, with a search component that doesn't affect the currently playing song.
-Only supports YouTube for now, but might support SoundCloud and others in the near future.
+Allows you to create playlists on the fly, with a search component that doesn't affect the currently playing song. Allows you to share playlists by URL. Only supports YouTube for now, but may support SoundCloud and others in the future.
 
 Built using Facebook's React, Browserify, Gulp and some other friends.
+Requires MongoDB for saving and loading playlists.
 
 
 ## Demo
@@ -14,7 +14,7 @@ Feel free to use it! :)
 
 In order to run it locally you'll need to:
 
-* Install [Gulp](http://gulpjs.com/) 
+* Install [Gulp](http://gulpjs.com/)
 
     ```sh
     $ [sudo] npm install -g gulp
@@ -25,14 +25,18 @@ In order to run it locally you'll need to:
     ```sh
     $ npm install
     ```
-    
+
 * Run gulp (watch) to create dist/ folder. It watches/compiles LESS files to CSS and JSX to JS:
 
     ```sh
     $ gulp
     ```
 
-* To test your project, start a development server like [http-server](https://www.npmjs.org/package/http-server) on the root directory and open `http://localhost:8080`.
+* Start the development server
+
+    ```sh
+    $ node server.js
+    ```
 
 
 * To build the distribution files before releasing a new version.

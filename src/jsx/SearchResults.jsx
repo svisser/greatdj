@@ -29,8 +29,12 @@ var SearchResults = React.createClass({
             <a onClick={this.handleVideoEnqueue.bind(this, res)} href="#">
               { res.snippet.title }
             </a>
+            <div class="mobile">
+              <button ref="enq" className="primary" onClick={this.handleVideoEnqueue.bind(this, res)}>Enqueue</button>
+              <button ref="play" onClick={this.handlePlayNow.bind(this, res)}>Play now</button>
+            </div>
           </td>
-          <td className="buttonTd">
+          <td className="buttonTd desktop">
             <button ref="enq" className="primary" onClick={this.handleVideoEnqueue.bind(this, res)}>Enqueue</button>
             <button ref="play" onClick={this.handlePlayNow.bind(this, res)}>Play now</button>
           </td>

@@ -103,7 +103,7 @@ var TopBar = React.createClass({
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <span className="logo"><a href="/">GREAT DJ<span className="it">!</span></a></span>
+        <span className="logo desktop"><a href="/">GREAT DJ<span className="it">!</span></a></span>
         <input type="text" className="q" ref="query" onChange={this.handleInputChange} onKeyDown={this.handleInputKeyDown} />
         <input type="submit" value="Search" />
         <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>

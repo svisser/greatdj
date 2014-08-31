@@ -9,7 +9,7 @@ var SearchResults = require('./SearchResults');
 var ResultsComponent = require('./ResultsComponent');
 var TopBar = require('./TopBar');
 
-var API_KEY = 'AIzaSyBtZzG2fInuoAsvrLfYi9jIsLgSdoE4JTs';
+var API_KEY = 'AIzaSyDLwX06yG_73ImDEubOb5Yv0E_U1iIdTJs';
 
 var SearchComponent = React.createClass({
 

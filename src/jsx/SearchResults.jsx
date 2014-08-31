@@ -42,12 +42,6 @@ var SearchResults = React.createClass({
       )
     }, this)
 
-    if(!resultsList.length){
-      resultsList = (
-        <tr className="initResults"><td>Search for music videos using the textbox above<span className="it">!</span></td></tr>
-      )
-    }
-
     return (
       <div className="results-containter">
         <table className="results">

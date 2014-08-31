@@ -104,7 +104,8 @@ var TopBar = React.createClass({
     return (
       <form onSubmit={this.handleSubmit}>
         <span className="logo desktop"><a href="/">GREAT DJ<span className="it">!</span></a></span>
-        <input type="text" className="q" ref="query" onChange={this.handleInputChange} onKeyDown={this.handleInputKeyDown} />
+        <input type="text" className="q" ref="query" onChange={this.handleInputChange} onKeyDown={this.handleInputKeyDown}
+        placeholder="Search for music videos here..." />
         <input type="submit" value="Search" />
         <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>
         <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>

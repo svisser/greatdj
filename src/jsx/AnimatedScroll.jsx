@@ -17,6 +17,8 @@ var AnimatedScroll = {
       }
 
       var difference = to - element.scrollTop;
+      // if(!difference) return;
+      //console.log(to , element.scrollTop)
       var perTick = difference / duration * 10;
 
       setTimeout(function () {

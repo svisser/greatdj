@@ -7,11 +7,13 @@ var React = require('react');
 var PlaylistItem = require('./PlaylistItem');
 var AnimatedScroll = require('./AnimatedScroll');
 
+var liHeight = 42 + 6;
+
 var Playlist = React.createClass({
   mixins: [AnimatedScroll],
 
   getAutoScrollPosition: function(){
-    return 48 * this.props.position;
+    return liHeight * this.props.position;
   },
 
   componentDidMount: function(){
@@ -22,25 +24,27 @@ var Playlist = React.createClass({
     // If deleting an item and playlist in condensed mode, got to disable the height transition otherwise
     // the element disappear straights away and the playlist shows one more top item (before the scroll/height animation kicks in)
     if(this.playlistCount > this.props.playlist.length && !this.props.playlistToggled && this.props.position){
-      document.querySelector('ul.playlist').style.transition = "none";
+      this.refs.playlist.getDOMNode().style.transition = "none";
+      this.refs.playlist.getDOMNode().style.height = liHeight * (this.props.playlist.length - this.props.position) + 6;
     } else {
-      document.querySelector('ul.playlist').style.transition = "height 250ms ease-out";
+      this.refs.playlist.getDOMNode().style.transition = "height 250ms ease-out";
     }
   },
 
-  componentDidUpdate: function() {
+  componentDidUpdate: function(oldProps) {
     if(this.refs.playlist.getDOMNode() && !this.props.playlistToggled && this.props.playlist.length){
       this.ensureActiveSongOnTop();
     }
 
     this.refs.playlist.getDOMNode().style.height = (this.props.playlistToggled) ?
-      48 * +this.props.playlist.length + 6 : 48 * (this.props.playlist.length - this.props.position) + 6;
+      liHeight * +this.props.playlist.length + 6 : liHeight * (this.props.playlist.length - this.props.position) + 6;
+
   },
 
   ensureActiveSongOnTop: function(){
     var that = this;
 
-    this.refs.playlist.getDOMNode().style.height = 48 * (this.props.playlist.length - this.props.position) + 6;
+    this.refs.playlist.getDOMNode().style.height = liHeight * (this.props.playlist.length - this.props.position) + 6;
     this.animatedScrollTo(this.refs.playlist.getDOMNode(), this.getAutoScrollPosition(), 275);
   },
 
@@ -63,6 +67,10 @@ var Playlist = React.createClass({
     Array.prototype.slice.apply(els).forEach(function(el){
       el.classList.remove('dragged-over');
     })
+  },
+
+  wasDelete: function(props, oldProps){
+    return props.playlist.length < oldProps.playlist.length;
   },
 
   render: function(){

@@ -2,9 +2,9 @@
   * @jsx React.DOM
   */
 
-var React = require('react'),
-    urllite = require('urllite');
-
+var React = require('react');
+var urllite = require('urllite');
+var request = require('superagent');
 
 var SearchComponent = require('./SearchComponent');
 var ResultsComponent = require('./ResultsComponent');
@@ -15,7 +15,7 @@ var StateHandler = React.createClass({
       playlist: [],
       results: [],
       position: -1,
-      playlistId: null
+      playlistId: null,
     }
   },
 
@@ -23,19 +23,23 @@ var StateHandler = React.createClass({
     var url = urllite(document.location.href),
         that = this;
 
-    if(url.hash){
+    if(url.pathname.length > 1){
       // do a server request with url.hash
-      var res = [];
+      var id = url.pathname.slice(1);
 
-      //res=JSON.parse('[{"type":"youtube","title":"Beyoncé - Pretty Hurts","videoId":"LXXQLa-5n5w"},{"type":"youtube","title":"Beyoncé - Drunk in Love (Explicit) ft. JAY Z","videoId":"p1JPKLa-Ofc"},{"type":"youtube","title":"Beyoncé - Partition (Explicit Video)","videoId":"pZ12_E5R3qc"},{"type":"youtube","title":"Beyoncé - XO","videoId":"3xUfCUFPL-8"},{"type":"youtube","title":"Beyoncé - Run the World (Girls)","videoId":"VBmMU_iwe6U"},{"type":"youtube","title":"Beyoncé - Halo","videoId":"bnVUHWCynig"},{"type":"youtube","title":"Beyoncé - Love On Top","videoId":"Ob7vObnFUJc"}]');
-      //this.setPlaylist(res);
+      request
+        .get('/p')
+        .query({
+          id: id,
+        })
+        .end(function(err, response){
+          that.setState({playlist: response.body.playlist, playlistId: id});
+        });
     }
   },
 
   componentWillUpdate: function(nextProps, nextState){
-    if(nextState.playlistId !== this.state.playlistId){
-      //history.pushState(null, null, '/#'+nextState.playlistId);
-    }
+
   },
 
   setResults: function(res){
@@ -43,8 +47,7 @@ var StateHandler = React.createClass({
   },
 
   setPlaylist: function(pl){
-    var playlistId = this.state.playlistId || Math.random().toString(36).slice(2); // revisit
-    this.setState({playlist: pl, playlistId: playlistId});
+    this.setState({playlist: pl});
   },
 
   setPosition: function(p){
@@ -59,19 +62,27 @@ var StateHandler = React.createClass({
   },
 
   handleSavePlaylist: function(){
-    var pl = this.state.playlist;
-    console.log(pl);
+    var pl = this.state.playlist,
+        id = this.state.playlistId,
+        that = this;
 
-    //send server request and receive pl.id
-    var plId = "F4TR0";
+    request
+      .post('/p')
+      .send({playlist:pl, id: id})
+      .end(function(err, response){
+        if(!err && response.body.id){
+          var playlistId = response.body.id;
 
-    history.pushState(null, null, '/#'+plId);
+          that.setState({playlistId: playlistId});
+          history.pushState(null, null, '/'+playlistId);
+        }
+      });
 
   },
 
   render: function(){
     return (
-      <div>
+      <div id="app">
         <div id="search-component">
           <SearchComponent
             results={this.state.results}
@@ -94,7 +105,7 @@ var StateHandler = React.createClass({
 
 React.renderComponent(
   <StateHandler />,
-  document.getElementById('app')
+  document.body
 );
 
 module.exports = StateHandler;

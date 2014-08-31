@@ -39,6 +39,8 @@ table { font-size:1em; }
 
 .hide { display: none; }
 
+#app { overflow: auto; }
+
 input[type="submit"],
 button {
   background: white;
@@ -152,12 +154,15 @@ button {
 
     .save-button {
       float: right;
-      padding:0 20px;
+      padding:12px;
       color: white;
       cursor: pointer;
+      border-radius: 100%;
+      margin:4px 0;
       i {
+        width:19px;
         font-size:1.5em;
-        line-height: @searchbar-height;
+        //line-height: @searchbar-height;
       }
     }
 
@@ -320,6 +325,12 @@ button {
       border-bottom:4px solid transparent;
       position:relative;
 
+      border-bottom: 1px solid #eaeaea;
+      border-right: 1px solid #eaeaea;
+
+      transition: margin-bottom 250ms ease-out;
+
+
       &:hover {
        // background:@gray-borders;
         cursor:pointer;
@@ -339,15 +350,18 @@ button {
         color: #aaa;
         padding: 8px 10px;
         border-radius: 100%;
+        position:absolute;
+        z-index:100;
 
         &:hover {
-          i { color:#333; }
+          i { color:#888; }
         }
       }
 
       span.title {
         font-size:0.9em;
         padding: 6px;
+        margin-left:32px;
         max-width:75%;
         white-space: nowrap;
         overflow: hidden;
@@ -356,6 +370,7 @@ button {
       span.bars {
         overflow: hidden;
         cursor:move;
+        left:2px;
         &:active {
           background:transparent;
         }
@@ -363,7 +378,8 @@ button {
 
 
       span.delete {
-        float:right;
+        right:2px;
+
         &:hover {
           i { color:@red; }
         }
@@ -378,15 +394,17 @@ button {
         position: absolute;
         width:100%;
         left:0;
-        bottom:-10px;
-        height:24px;
+        height: 48px;
+        top: 0;
         background:transparent;
       }
 
     }
 
     li.dragged-over {
-      border-bottom:4px solid @primary;
+      //border-bottom:4px solid @primary;
+      margin-bottom: 58px;
+      span.drop-zone { height: 150px; }
     }
 
     li.active {
@@ -413,6 +431,9 @@ button {
 
     li.old {
       background: transparent;
+      border-bottom: 0px;
+      border-right: 0px;
+
     }
   }
 }

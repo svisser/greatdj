@@ -8,7 +8,7 @@
   },
   "author": "",
   "license": "BSD-2-Clause",
-  "devDependencies": {
+  "dependencies": {
     "gulp-react": "~0.5.0",
     "gulp": "~3.8.7",
     "gulp-plumber": "~0.6.4",
@@ -27,6 +27,9 @@
     "superagent": "~0.18.2",
     "domquery": "~1.2.0",
     "react-mini-router": "~0.2.3",
-    "urllite": "~0.4.4"
+    "urllite": "~0.4.4",
+    "express": "~4.8.7",
+    "body-parser": "~1.6.7",
+    "mongodb": "~1.4.9"
   }
 }

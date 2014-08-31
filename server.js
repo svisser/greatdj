@@ -22,11 +22,11 @@ if ('development' == app.get('env')) {
 }
 
 app.post('/p', function(req, res){
-  var collection = db.collection('test');
+  var collection = db.collection('playlists');
 
   if(req.body.id){
     // update
-    collection.update({id: id}, {$set:{playlist: req.playlist}}, {w:1}, function(err, result) {
+    collection.update({id: req.body.id}, {$set:{playlist: req.body.playlist}}, {w:1}, function(err, result) {
       console.log('update ok ', req.body.id)
       res.send({id: id});
     });
@@ -43,7 +43,7 @@ app.post('/p', function(req, res){
 })
 
 app.get('/p', function(req, res){
-  var collection = db.collection('test');
+  var collection = db.collection('playlists');
 
   collection.findOne({id: req.query.id}, function(err, item) {
     res.send(item);

@@ -69,8 +69,7 @@ var TopBar = React.createClass({
     }, 250);
   },
 
-  // Autocomplete event handlers
-
+  // Autocomplete event handler
   handleInputKeyDown: function(e){
     if(e.keyCode === 38){ //up
       if(this.state.selected >= 0){
@@ -124,4 +123,3 @@ var TopBar = React.createClass({
 });
 
 module.exports = TopBar;
-

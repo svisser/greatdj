@@ -4,42 +4,33 @@
 
 var React = require('react');
 var urllite = require('urllite');
-var request = require('superagent');
 
 var SearchComponent = require('./SearchComponent');
 var ResultsComponent = require('./ResultsComponent');
+var PlaylistStore = require('../stores/PlaylistStore');
+var PlaylistActions = require('../actions/PlaylistActions');
 
 var StateHandler = React.createClass({
   getInitialState: function(){
     return {
-      playlist: [],
+      playlist: PlaylistStore.getPlaylist(),
       results: [],
       position: -1,
-      playlistId: null,
+      playlistId: PlaylistStore.getPlaylistId(),
     }
   },
 
   componentWillMount: function(){
+    PlaylistStore.addChangeListener(this._onChange);
+
     var url = urllite(document.location.href),
         that = this;
 
     if(url.pathname.length > 1){
       // do a server request with url.hash
       var id = url.pathname.slice(1);
-
-      request
-        .get('/p')
-        .query({
-          id: id,
-        })
-        .end(function(err, response){
-          that.setState({playlist: response.body.playlist, playlistId: id});
-        });
+      PlaylistActions.load(id);
     }
-  },
-
-  componentWillUpdate: function(nextProps, nextState){
-
   },
 
   setResults: function(res){
@@ -61,23 +52,19 @@ var StateHandler = React.createClass({
     }
   },
 
+  _onChange: function() {
+    console.log({
+      playlist: PlaylistStore.getPlaylist(),
+      playlistId: PlaylistStore.getPlaylistId(),
+    })
+    this.setState({
+      playlist: PlaylistStore.getPlaylist(),
+      playlistId: PlaylistStore.getPlaylistId(),
+    });
+  },
+
   handleSavePlaylist: function(){
-    var pl = this.state.playlist,
-        id = this.state.playlistId,
-        that = this;
-
-    request
-      .post('/p')
-      .send({playlist:pl, id: id})
-      .end(function(err, response){
-        if(!err && response.body.id){
-          var playlistId = response.body.id;
-
-          that.setState({playlistId: playlistId});
-          history.pushState(null, null, '/'+playlistId);
-        }
-      });
-
+    PlaylistActions.save(this.state.playlist, this.state.playlistId);
   },
 
   render: function(){

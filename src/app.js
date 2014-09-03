@@ -7,7 +7,7 @@ document.querySelector('head').innerHTML += '<title>GREATDJ!</title><meta name="
 NodeList.prototype.forEach = Array.prototype.forEach;
 HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
-require('./jsx/StateHandler');
+require('./components/StateHandler');
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

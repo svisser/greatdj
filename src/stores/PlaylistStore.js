@@ -49,7 +49,7 @@ AppDispatcher.register(function(payload) {
   var action = payload.action;
 
   switch(action.actionType) {
-    case Constants.PLAYLIST_SAVE:
+    case Constants.PLAYLIST_SAVED:
       if(action.response === Constants.request.PENDING){
         /// tururur
       } else if(action.response.playlistId){
@@ -58,7 +58,7 @@ AppDispatcher.register(function(payload) {
       }
       break;
 
-    case Constants.PLAYLIST_LOAD:
+    case Constants.PLAYLIST_LOADED:
       if(action.response === Constants.request.PENDING){
         /// tururur
       } else if(action.response.playlistId){

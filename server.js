@@ -32,7 +32,7 @@ app.post('/p', function(req, res){
     });
   } else {
     // insert new record
-    var id = Math.random().toString(36).slice(12); // revisit
+    var id = Math.random().toString(36).slice(3,9); // revisit
     var doc = {id: id, playlist: req.body.playlist, created: new Date()};
 
     collection.insert(doc, {w:1}, function(err, result) {

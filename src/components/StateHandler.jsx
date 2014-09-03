@@ -38,7 +38,7 @@ var StateHandler = React.createClass({
   },
 
   setPlaylist: function(pl){
-    this.setState({playlist: pl});
+    this.setState({playlist: pl}); // @todo flux - PlaylistActions.setPlaylist(pl)
   },
 
   setPosition: function(p){
@@ -53,10 +53,6 @@ var StateHandler = React.createClass({
   },
 
   _onChange: function() {
-    console.log({
-      playlist: PlaylistStore.getPlaylist(),
-      playlistId: PlaylistStore.getPlaylistId(),
-    })
     this.setState({
       playlist: PlaylistStore.getPlaylist(),
       playlistId: PlaylistStore.getPlaylistId(),

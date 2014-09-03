@@ -13,7 +13,7 @@ function dispatch(key, response, params) {
 
 var Api = {
   savePlaylist: function(pl, plId) {
-    var key = Constants.PLAYLIST_SAVE;
+    var key = Constants.PLAYLIST_SAVED;
     var params = {playlist: pl, id: plId};
 
     dispatch(key, Constants.request.PENDING, params);
@@ -32,7 +32,7 @@ var Api = {
   },
 
   loadPlaylist: function(plId){
-    var key = Constants.PLAYLIST_LOAD;
+    var key = Constants.PLAYLIST_LOADED;
     var params = {id: plId};
 
     dispatch(key, Constants.request.PENDING, params);

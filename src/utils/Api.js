@@ -56,13 +56,12 @@ Api.io = {
   socket: null,
   register: function(id){
     if(!this.socket){
-      this.socket = io('http://localhost:8080/');
+      this.socket = io();
       window.io = this.socket;
 
       this.socket.on('playlistChange', function(data){
         console.log('io * reloading playlist ');
         dispatch(Constants.PLAYLIST_LOADED, {playlist: data.playlist, playlistId: data.id}, {id: data.id});
-        //Api.loadPlaylist(data);
       });
     }
 

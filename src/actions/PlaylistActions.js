@@ -21,7 +21,12 @@ var PlaylistActions = {
    */
   load: function(plId) {
     Api.loadPlaylist(plId);
+    Api.io.register(plId);
   },
+
+  changedPlaylist: function(plId, pl){
+    Api.io.changedPlaylist(plId, pl);
+  }
 
 };
 

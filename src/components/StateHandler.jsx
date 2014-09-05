@@ -4,6 +4,7 @@
 
 var React = require('react');
 var urllite = require('urllite');
+var isMobile = require('ismobilejs');
 
 var SearchComponent = require('./SearchComponent');
 var ResultsComponent = require('./ResultsComponent');
@@ -17,6 +18,7 @@ var StateHandler = React.createClass({
       results: [],
       position: -1,
       playlistId: PlaylistStore.getPlaylistId(),
+      mode: isMobile.any ? 'client' : 'server',
     }
   },
 
@@ -39,6 +41,8 @@ var StateHandler = React.createClass({
 
   setPlaylist: function(pl){
     this.setState({playlist: pl}); // @todo flux - PlaylistActions.setPlaylist(pl)
+    if(this.state.playlistId)
+      PlaylistActions.changedPlaylist(this.state.playlistId, pl)
   },
 
   setPosition: function(p){
@@ -70,7 +74,8 @@ var StateHandler = React.createClass({
           <SearchComponent
             results={this.state.results}
             setResults={this.setResults}
-            handleSavePlaylist={this.handleSavePlaylist} />
+            handleSavePlaylist={this.handleSavePlaylist}
+            mode={this.state.mode}/>
         </div>
         <div id="player-component">
           <ResultsComponent
@@ -78,7 +83,8 @@ var StateHandler = React.createClass({
             setPlaylist={this.setPlaylist}
             position={this.state.position}
             setPosition={this.setPosition}
-            onPlayerReady={this.playerReady}/>
+            onPlayerReady={this.playerReady}
+            mode={this.state.mode} />
         </div>
         <a id="github-link" href="https://github.com/ruiramos/greatdj" target="_blank">GreatDJ on GitHub</a>
       </div>

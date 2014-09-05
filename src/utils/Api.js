@@ -2,6 +2,7 @@
 var request = require('superagent');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Constants = require('../constants/AppConstants');
+var io = require('socket.io-client');
 
 function dispatch(key, response, params) {
     var payload = {actionType: key, response: response};
@@ -49,6 +50,29 @@ var Api = {
         });
 
       }
-    };
+};
+
+Api.io = {
+  socket: null,
+  register: function(id){
+    if(!this.socket){
+      this.socket = io('http://localhost:8080/');
+      window.io = this.socket;
+
+      this.socket.on('playlistChange', function(data){
+        console.log('io * reloading playlist ');
+        dispatch(Constants.PLAYLIST_LOADED, {playlist: data.playlist, playlistId: data.id}, {id: data.id});
+        //Api.loadPlaylist(data);
+      });
+    }
+
+    console.log('io * registering for ', id)
+    this.socket.emit('register', {id: id});
+  },
+  changedPlaylist: function(id, pl){
+    this.socket.emit('changedPlaylist', {id: id, playlist: pl});
+  }
+};
+
 
  module.exports = Api;

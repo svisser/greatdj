@@ -2,8 +2,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongo = require('mongodb').MongoClient;
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var geoip = require('geoip-lite');
-var db, playlist = {};
+var db;
+var playlistController = {};
+var playlistClients = {};
 
 app.set('port', process.env.PORT || 8080);
 
@@ -13,37 +17,37 @@ app.use('/dist', express.static(__dirname + '/dist'));
 app.use('/components', express.static(__dirname + '/components'));
 
 // development only
-if ('development' == app.get('env')) {
-  console.log('Development mode.');
+// if ('development' == app.get('env')) {
+//   console.log('Development mode.');
 
-  app.use(function(req, res, next){
-    console.log('%s %s', req.method, req.url);
-    next();
-  });
-}
+//   app.use(function(req, res, next){
+//     //console.log('%s %s', req.method, req.url);
+//     next();
+//   });
+// }
 
 app.post('/p', function(req, res){
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
   if(req.body.id){
-    // update
+    // update - just overwrite for now
     // db.collection('playlists').findOne({id: req.body.id}, function(err, obj){
     //   if(obj && obj.ip === ip){
-    //     playlist.update(req.body.id, req.body, res);
+    //     playlistController.update(req.body.id, req.body, res);
     //   } else {
     //     var data = req.body;
     //     data.ip = ip;
     //     playlist.insert(data, res);
     //   }
     // });
-    playlist.update(req.body.id, req.body, res);
+    playlistController.update(req.body.id, req.body, res);
   } else {
     // insert new record
     var data = req.body;
     data.ip = ip;
-    playlist.insert(data, res);
+    playlistController.insert(data, res);
   }
-})
+});
 
 app.get('/p', function(req, res){
   var collection = db.collection('playlists');
@@ -53,20 +57,60 @@ app.get('/p', function(req, res){
   });
 });
 
-app.get('/*', function(req, res){
+app.get('*', function(req, res){
   res.sendFile(__dirname + "/index.html");
 });
 
 // db - Mongo Connect
 mongo.connect("mongodb://localhost/greatdj", function(err, database) {
   db = database;
-  app.listen(app.get('port'), function(){
+  http.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
   });
 });
 
+// socket io for realtime updates on playlists across clients
+io.on('connection', function(socket){
+  // socket is the client socket
+  var plId;
+  console.log(' * new connection');
+
+  socket.on('register', function(data){
+    console.log(' * client connected', data.id);
+
+    playlistClients[data.id] = playlistClients[data.id] || [];
+    playlistClients[data.id].push(socket);
+    plId = data.id;
+  });
+
+  socket.on('disconnect', function(){
+    console.log(' * client disconnected', plId);
+    //remove from playlistClients playlistClients
+    if(plId){
+      for (var i = playlistClients[plId].length - 1; i >= 0; i--) {
+        if(playlistClients[plId][i] === socket){
+          playlistClients[plId].splice(i, 1);
+          return;
+        }
+      }
+    }
+  });
+
+  socket.on('changedPlaylist', function(data){
+    console.log(' * changedPlaylist:', data.id);
+
+    for (var i = playlistClients[data.id].length - 1; i >= 0; i--) {
+      var subscriber = playlistClients[data.id][i];
+      if(subscriber !== socket){
+        subscriber.emit('playlistChange', data);
+      }
+    }
+  });
+
+});
+
 // playlist controllers controllers - get them out of here some day
-playlist.insert = function(data, res){
+playlistController.insert = function(data, res){
   var id = Math.random().toString(36).slice(3,9); // revisit
   var geo = geoip.lookup(data.ip);
 
@@ -78,7 +122,7 @@ playlist.insert = function(data, res){
   });
 };
 
-playlist.update = function(id, data, res){
+playlistController.update = function(id, data, res){
   db.collection('playlists').update({id: id}, {$set:{playlist: data.playlist}}, {w:1}, function(err, result) {
     console.log('update ok ', id);
     res.send({operation: 'update', id: id});

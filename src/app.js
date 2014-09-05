@@ -7,7 +7,7 @@ document.querySelector('head').innerHTML += '<title>GREATDJ!</title><meta name="
 NodeList.prototype.forEach = Array.prototype.forEach;
 HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
-// Custom event Polyfill for older browsers and IE
+// CustomEvent Polyfill for older browsers and IE
 (function () {
   function CustomEvent ( event, params ) {
     params = params || { bubbles: false, cancelable: false, detail: undefined };
@@ -21,10 +21,7 @@ HTMLCollection.prototype.forEach = Array.prototype.forEach;
   window.CustomEvent = CustomEvent;
 })();
 
-// Start App
-require('./components/StateHandler');
-
-// Google Analytics
+// Google Analytics tracking
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -33,3 +30,5 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-38568098-2', 'auto');
 ga('send', 'pageview');
 
+// Start App
+require('./components/StateHandler');

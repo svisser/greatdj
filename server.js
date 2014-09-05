@@ -27,16 +27,16 @@ app.post('/p', function(req, res){
 
   if(req.body.id){
     // update
-    db.collection('playlists').findOne({id: req.body.id}, function(err, obj){
-      if(obj && obj.ip === ip){
-        playlist.update(req.body.id, req.body, res);
-      } else {
-        var data = req.body;
-        data.ip = ip;
-        playlist.insert(data, res);
-      }
-    });
-
+    // db.collection('playlists').findOne({id: req.body.id}, function(err, obj){
+    //   if(obj && obj.ip === ip){
+    //     playlist.update(req.body.id, req.body, res);
+    //   } else {
+    //     var data = req.body;
+    //     data.ip = ip;
+    //     playlist.insert(data, res);
+    //   }
+    // });
+    playlist.update(req.body.id, req.body, res);
   } else {
     // insert new record
     var data = req.body;

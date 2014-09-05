@@ -80,6 +80,7 @@ var StateHandler = React.createClass({
             setPosition={this.setPosition}
             onPlayerReady={this.playerReady}/>
         </div>
+        <a id="github-link" href="https://github.com/ruiramos/greatdj" target="_blank">GreatDJ on GitHub</a>
       </div>
     )
   }

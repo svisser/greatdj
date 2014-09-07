@@ -5,6 +5,7 @@
 var React = require('react');
 
 var AutoComplete = require('./AutoComplete');
+var PlaylistActions = require('../actions/PlaylistActions');
 
 var request = require('superagent');
 
@@ -99,6 +100,10 @@ var TopBar = React.createClass({
     this.setState({selected: -1});
   },
 
+  unsetPlaylistId: function(){
+    PlaylistActions.unsetPlaylistId();
+  },
+
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -108,6 +113,10 @@ var TopBar = React.createClass({
         <input type="submit" value="Search" />
         <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>
         <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>
+        <span className="playlist-id" style={this.props.playlistId ? {} : {display: 'none'}}>
+          {this.props.playlistId}
+          <i className="fa fa-times" onClick={this.unsetPlaylistId}></i>
+        </span>
 
         <AutoComplete
           complete={this.state.complete}

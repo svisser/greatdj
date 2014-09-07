@@ -25,6 +25,10 @@ var Api = {
       .end(function(err, response){
         if(!err && response.body.id){
           dispatch(key, {playlistId: response.body.id}, params);
+
+          console.log('save playlist register')
+          Api.io.register(response.body.id);
+
         } else {
           dispatch(key, Constants.request.ERROR, params);
         }
@@ -57,19 +61,22 @@ Api.io = {
   register: function(id){
     if(!this.socket){
       this.socket = io();
-      window.io = this.socket;
 
       this.socket.on('playlistChange', function(data){
-        console.log('io * reloading playlist ');
         dispatch(Constants.PLAYLIST_LOADED, {playlist: data.playlist, playlistId: data.id}, {id: data.id});
       });
     }
 
-    console.log('io * registering for ', id)
     this.socket.emit('register', {id: id});
   },
   changedPlaylist: function(id, pl){
     this.socket.emit('changedPlaylist', {id: id, playlist: pl});
+  },
+  unregister: function(){
+    if(this.socket){
+      this.socket.emit('unregister');
+      this.socket = null;
+    }
   }
 };
 

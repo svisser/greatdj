@@ -58,7 +58,12 @@ var SearchComponent = React.createClass({
   render: function() {
     return (
       <div>
-        <TopBar handleSubmit={this.handleSubmit} handleSavePlaylist={this.props.handleSavePlaylist} />
+        <TopBar
+          handleSubmit={this.handleSubmit}
+          handleSavePlaylist={this.props.handleSavePlaylist}
+          playlistId={this.props.playlistId}
+          unsetPlaylistId={this.props.unsetPlaylistId}
+          />
         <SearchResults videos={this.props.results} enqueueHandler={this.videoEnqueued} playNowHandler={this.playNowHandler} />
       </div>
     );

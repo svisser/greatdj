@@ -67,6 +67,17 @@ AppDispatcher.register(function(payload) {
       }
       break;
 
+    case Constants.PLAYLIST_CHANGE:
+      loaded(action.response.playlist, action.response.playlistId);
+      PlaylistStore.emitChange();
+      break;
+
+    case Constants.UNSET_PLAYLIST_ID:
+      _playlistId = null;
+      history.pushState(null, null, '/');
+      PlaylistStore.emitChange();
+      break;
+
     default:
       return true;
   }

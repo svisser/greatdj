@@ -40,9 +40,7 @@ var StateHandler = React.createClass({
   },
 
   setPlaylist: function(pl){
-    this.setState({playlist: pl}); // @todo flux - PlaylistActions.setPlaylist(pl)
-    if(this.state.playlistId)
-      PlaylistActions.changedPlaylist(this.state.playlistId, pl)
+    PlaylistActions.changedPlaylist(this.state.playlistId, pl)
   },
 
   setPosition: function(p){
@@ -50,7 +48,6 @@ var StateHandler = React.createClass({
   },
 
   playerReady: function(){
-    console.log('player ready')
     if(this.state.playlist.length){
       this.setPosition(0);
     }
@@ -75,7 +72,8 @@ var StateHandler = React.createClass({
             results={this.state.results}
             setResults={this.setResults}
             handleSavePlaylist={this.handleSavePlaylist}
-            mode={this.state.mode}/>
+            mode={this.state.mode}
+            playlistId={this.state.playlistId} />
         </div>
         <div id="player-component">
           <ResultsComponent

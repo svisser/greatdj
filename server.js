@@ -93,6 +93,21 @@ io.on('connection', function(socket){
           return;
         }
       }
+      plId = null;
+    }
+  });
+
+  socket.on('unregister', function(){
+    console.log(' * client unregister', plId);
+    //remove from playlistClients playlistClients
+    if(plId){
+      for (var i = playlistClients[plId].length - 1; i >= 0; i--) {
+        if(playlistClients[plId][i] === socket){
+          playlistClients[plId].splice(i, 1);
+          return;
+        }
+      }
+      plId = null;
     }
   });
 

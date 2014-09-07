@@ -14,6 +14,7 @@ var PlaylistActions = {
     });
 
     Api.savePlaylist(pl, plId);
+
   },
 
   /**
@@ -21,11 +22,30 @@ var PlaylistActions = {
    */
   load: function(plId) {
     Api.loadPlaylist(plId);
+              console.log('load playlist register')
+
     Api.io.register(plId);
   },
 
   changedPlaylist: function(plId, pl){
-    Api.io.changedPlaylist(plId, pl);
+    AppDispatcher.handleViewAction({
+      actionType: Constants.PLAYLIST_CHANGE,
+      response:{
+        playlistId: plId,
+        playlist: pl
+      }
+    });
+
+    if(plId)
+      Api.io.changedPlaylist(plId, pl);
+  },
+
+  unsetPlaylistId: function(){
+    AppDispatcher.handleViewAction({
+      actionType: Constants.UNSET_PLAYLIST_ID,
+    });
+
+    Api.io.unregister();
   }
 
 };

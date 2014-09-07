@@ -8,6 +8,7 @@ var geoip = require('geoip-lite');
 var db;
 var playlistController = {};
 var playlistClients = {};
+var latestVersion = {};
 
 app.set('port', process.env.PORT || 8080);
 
@@ -72,7 +73,9 @@ mongo.connect("mongodb://localhost/greatdj", function(err, database) {
 // socket io for realtime updates on playlists across clients
 io.on('connection', function(socket){
   // socket is the client socket
+  // global vars that belong to each socket
   var plId;
+
   console.log(' * new connection');
 
   socket.on('register', function(data){
@@ -81,6 +84,19 @@ io.on('connection', function(socket){
     playlistClients[data.id] = playlistClients[data.id] || [];
     playlistClients[data.id].push(socket);
     plId = data.id;
+
+    if(playlistClients[data.id].length > 1 && latestVersion[data.id]){
+      socket.emit('playlistChange', latestVersion[data.id]);
+    }
+
+    // check if there's a newer version of the playlist available and send it to him
+    // if(data.sync && playlistClients[data.id].length > 1 && latestVersion[data.id]){
+    //   socket.emit('playlistChange', latestVersion[data.id]);
+    // } else {
+      //lastestVersion[data.id] = null;
+    //}
+    // how to invalidate ?
+
   });
 
   socket.on('disconnect', function(){
@@ -93,7 +109,12 @@ io.on('connection', function(socket){
           return;
         }
       }
+
       plId = null;
+
+      if(!playlistClients[data.id].length){
+        latestVersion[data.id] = null;
+      }
     }
   });
 
@@ -113,6 +134,8 @@ io.on('connection', function(socket){
 
   socket.on('changedPlaylist', function(data){
     console.log(' * changedPlaylist:', data.id);
+
+    latestVersion[data.id] = data;
 
     for (var i = playlistClients[data.id].length - 1; i >= 0; i--) {
       var subscriber = playlistClients[data.id][i];

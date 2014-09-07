@@ -20,11 +20,13 @@ var PlaylistActions = {
   /**
    * @param  {string} id
    */
-  load: function(plId) {
+  load: function(plId, sync) {
     Api.loadPlaylist(plId);
-              console.log('load playlist register')
+    if(sync)
+      Api.io.register(plId);
+    else
+      Api.io.unregister();
 
-    Api.io.register(plId);
   },
 
   changedPlaylist: function(plId, pl){

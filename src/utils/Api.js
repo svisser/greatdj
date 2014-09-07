@@ -26,7 +26,7 @@ var Api = {
         if(!err && response.body.id){
           dispatch(key, {playlistId: response.body.id}, params);
 
-          console.log('save playlist register')
+          console.log('save playlist register');
           Api.io.register(response.body.id);
 
         } else {
@@ -68,6 +68,7 @@ Api.io = {
     }
 
     this.socket.emit('register', {id: id});
+
   },
   changedPlaylist: function(id, pl){
     this.socket.emit('changedPlaylist', {id: id, playlist: pl});

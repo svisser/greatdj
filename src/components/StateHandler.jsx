@@ -18,7 +18,7 @@ var StateHandler = React.createClass({
       results: [],
       position: -1,
       playlistId: PlaylistStore.getPlaylistId(),
-      mode: isMobile.any ? 'client' : 'server',
+      sync: isMobile.any ? true : false,
     }
   },
 
@@ -31,12 +31,18 @@ var StateHandler = React.createClass({
     if(url.pathname.length > 1){
       // do a server request with url.hash
       var id = url.pathname.slice(1);
-      PlaylistActions.load(id);
+      PlaylistActions.load(id, isMobile.any);
     }
   },
 
   setResults: function(res){
     this.setState({results: res});
+  },
+
+  setSync: function(){
+    var sync = !this.state.sync;
+    PlaylistActions.load(this.state.playlistId, sync);
+    this.setState({sync: sync});
   },
 
   setPlaylist: function(pl){

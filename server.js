@@ -110,11 +110,12 @@ io.on('connection', function(socket){
         }
       }
 
+      if(!playlistClients[plId].length){
+        latestVersion[plId] = null;
+      }
+
       plId = null;
 
-      if(!playlistClients[data.id].length){
-        latestVersion[data.id] = null;
-      }
     }
   });
 

@@ -18,6 +18,7 @@
 @red: #e51c23;
 
 @primary: @indigo;
+@darker-primary: #26389B;
 @accent: @pink;
 @gray-lightest: #f4f4f4;
 @gray-borders: #e4e4e4;
@@ -146,6 +147,19 @@ button {
       }
     }
 
+    .tagSpan {
+      font-size: 12px;
+      padding: 4px 8px 4px 8px;
+      background: @darker-primary;
+      line-height: normal;
+      border-radius: 12px;
+      margin-top: 13px;
+      text-align: center;
+      border-bottom:1px solid darken(@darker-primary, 3%);
+      border-left:1px solid darken(@darker-primary, 3%);
+
+    }
+
     input[type="text"] {
       padding:5px;
       width:50%;
@@ -196,15 +210,10 @@ button {
     }
 
     span.playlist-id {
+      .tagSpan();
+      padding: 4px 22px 4px 8px;
       position:relative;
       float: right;
-      font-size: 12px;
-      padding: 4px 22px 4px 8px;
-      background: #26389B;
-      line-height: normal;
-      border-radius: 12px;
-      margin-top: 13px;
-      text-align: center;
 
       i {
         color: #eee;
@@ -214,6 +223,23 @@ button {
         cursor: pointer;
 
         &:hover { color: white; }
+      }
+    }
+
+    span.sync {
+      .tagSpan();
+      float: right;
+      margin-right:12px;
+      cursor: pointer;
+      i { margin-right: 8px; }
+
+      &:hover {
+        background:lighten(@primary, 3%);
+      }
+
+      &.active {
+        background: @accent;
+        border-color: darken(@accent, 4.5%);
       }
     }
 

@@ -63,6 +63,8 @@ var SearchComponent = React.createClass({
           handleSavePlaylist={this.props.handleSavePlaylist}
           playlistId={this.props.playlistId}
           unsetPlaylistId={this.props.unsetPlaylistId}
+          toggleSync={this.props.toggleSync}
+          sync={this.props.sync}
           />
         <SearchResults videos={this.props.results} enqueueHandler={this.videoEnqueued} playNowHandler={this.playNowHandler} />
       </div>

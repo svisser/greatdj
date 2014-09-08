@@ -39,7 +39,7 @@ var StateHandler = React.createClass({
     this.setState({results: res});
   },
 
-  setSync: function(){
+  toggleSync: function(){
     var sync = !this.state.sync;
     PlaylistActions.load(this.state.playlistId, sync);
     this.setState({sync: sync});
@@ -79,7 +79,10 @@ var StateHandler = React.createClass({
             setResults={this.setResults}
             handleSavePlaylist={this.handleSavePlaylist}
             mode={this.state.mode}
-            playlistId={this.state.playlistId} />
+            playlistId={this.state.playlistId}
+            toggleSync={this.toggleSync}
+            sync={this.state.sync}
+            />
         </div>
         <div id="player-component">
           <ResultsComponent

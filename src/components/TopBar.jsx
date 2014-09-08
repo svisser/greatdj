@@ -117,7 +117,10 @@ var TopBar = React.createClass({
           {this.props.playlistId}
           <i className="fa fa-times" onClick={this.unsetPlaylistId}></i>
         </span>
-
+        <span className={this.props.sync ? 'sync active' : 'sync'} style={this.props.playlistId ? {} : {display: 'none'}} onClick={this.props.toggleSync}>
+          <i className="fa fa-refresh"></i>
+           Sync
+        </span>
         <AutoComplete
           complete={this.state.complete}
           selected={this.state.selected}

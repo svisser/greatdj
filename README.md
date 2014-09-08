@@ -1,10 +1,16 @@
 Killer playlists for parties!
 
-Allows you to create playlists on the fly, with a search component that doesn't affect the currently playing song. Allows you to share playlists by URL. Only supports YouTube for now, but may support SoundCloud and others in the future.
+GreatDJ was originally about searching Youtube and creating playlists that on the fly play automatically.
+Lately, though, it has become all sorts of strange things:
 
-Built using Facebook's React, Browserify, Gulp and some other friends.
+ * You can save playlists, it creates a unique URL you can share with your best best friends (beware, though, saving overrites!)
+ * It has a sync mode, on by default, which will propagate any changes on a (saved) playlist on all devices, even without actually saving the changes to the server. Useful, for instance, if you have it playing in a computer and want to push some tunes using your mobile. Or your friend's mobile. Or if there's dozens of you trying to get your song to play at the same time.
+ * When connecting to a playlist, if there are any other clients connected, you'll always get the latest version, however
+ * If changes are not saved and you're the only client, you'll get the saved version from the server.
+ * This might all change, I'm not sure.
+
+Built using Facebook's React, Socket.IO, Browserify, Gulp and a bunch of other cool buzzwords.
 Requires MongoDB for saving and loading playlists.
-
 
 ## Demo
 [http://greatdj.ruiramos.com] (http://greatdj.ruiramos.com/)

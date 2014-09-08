@@ -1,6 +1,6 @@
 Killer playlists for parties!
 
-GreatDJ was originally about searching Youtube and creating playlists that on the fly play automatically.
+GreatDJ was originally about searching Youtube and creating playlists on the fly that play automatically.
 Lately, though, it has become all sorts of strange things:
 
  * You can save playlists, it creates a unique URL you can share with your best best friends (beware, though, saving overrites!)

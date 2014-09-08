@@ -18,7 +18,7 @@ var StateHandler = React.createClass({
       results: [],
       position: -1,
       playlistId: PlaylistStore.getPlaylistId(),
-      sync: isMobile.any ? true : false,
+      sync: isMobile.any ? true : true,
     }
   },
 
@@ -31,7 +31,7 @@ var StateHandler = React.createClass({
     if(url.pathname.length > 1){
       // do a server request with url.hash
       var id = url.pathname.slice(1);
-      PlaylistActions.load(id, isMobile.any);
+      PlaylistActions.load(id, true);
     }
   },
 

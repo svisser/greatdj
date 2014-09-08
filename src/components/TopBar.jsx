@@ -112,14 +112,15 @@ var TopBar = React.createClass({
         placeholder="Search for music videos here..." />
         <input type="submit" value="Search" />
         <input type="checkbox" value="HD Only" ref="hd" id="hd-checkbox" /><label htmlFor="hd-checkbox"> HD Only </label>
-        <button className="save-button flat" type="button" onClick={this.props.handleSavePlaylist}><i className="fa fa-save"></i></button>
+        <button className="save-button" type="button" onClick={this.props.handleSavePlaylist}>
+          <i className="fa fa-save pre"></i> Save
+        </button>
         <span className="playlist-id" style={this.props.playlistId ? {} : {display: 'none'}}>
           {this.props.playlistId}
           <i className="fa fa-times" onClick={this.unsetPlaylistId}></i>
         </span>
         <span className={this.props.sync ? 'sync active' : 'sync'} style={this.props.playlistId ? {} : {display: 'none'}} onClick={this.props.toggleSync}>
-          <i className="fa fa-refresh"></i>
-           Sync
+          <i className="fa fa-refresh pre"></i> Sync
         </span>
         <AutoComplete
           complete={this.state.complete}

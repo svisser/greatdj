@@ -152,11 +152,19 @@ button {
       padding: 4px 8px 4px 8px;
       background: @darker-primary;
       line-height: normal;
-      border-radius: 12px;
+      border-radius: 4px;
       margin-top: 13px;
       text-align: center;
-      border-bottom:1px solid darken(@darker-primary, 3%);
-      border-left:1px solid darken(@darker-primary, 3%);
+      border-bottom:1px solid darken(@darker-primary, 5%);
+      border-left:1px solid darken(@darker-primary, 5%);
+
+      i.pre {
+        margin-right: 6px;
+      }
+
+      &:hover {
+        background:lighten(@darker-primary, 6.5%);
+      }
 
     }
 
@@ -195,31 +203,32 @@ button {
       vertical-align: middle;
     }
 
-    .save-button {
+    button.save-button {
+      .tagSpan();
       float: right;
-      padding:12px;
       color: white;
       cursor: pointer;
-      border-radius: 100%;
-      margin:4px 0;
-      i {
-        width:19px;
-        font-size:1.5em;
-        //line-height: @searchbar-height;
-      }
+      border-top:0;
+      border-right:0;
+      // i {
+      //   width:19px;
+      //   font-size:1.5em;
+      //   //line-height: @searchbar-height;
+      // }
     }
 
     span.playlist-id {
       .tagSpan();
       padding: 4px 22px 4px 8px;
       position:relative;
+      margin-right:12px;
       float: right;
 
       i {
         color: #eee;
         position: absolute;
         right: 8px;
-        top: 6px;
+        top: 7px;
         cursor: pointer;
 
         &:hover { color: white; }
@@ -231,15 +240,10 @@ button {
       float: right;
       margin-right:12px;
       cursor: pointer;
-      i { margin-right: 8px; }
-
-      &:hover {
-        background:lighten(@primary, 3%);
-      }
 
       &.active {
         background: @accent;
-        border-color: darken(@accent, 4.5%);
+        border-color: darken(@accent, 6.5%);
       }
     }
 

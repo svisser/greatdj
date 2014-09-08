@@ -93,7 +93,7 @@ var StateHandler = React.createClass({
             onPlayerReady={this.playerReady}
             mode={this.state.mode} />
         </div>
-        <a id="github-link" href="https://github.com/ruiramos/greatdj" target="_blank">GreatDJ on GitHub</a>
+        <a id="github-link" href="https://github.com/ruiramos/greatdj" target="_blank" class="desktop">GreatDJ on GitHub</a>
       </div>
     )
   }

@@ -4,6 +4,8 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Constants = require('../constants/AppConstants');
 var io = require('socket.io-client');
 
+var socketIoUrl = (window.location.href.indexOf('localhost') >= 0 ? '' : 'http://greatdj.ruiramos.com:8090');
+
 function dispatch(key, response, params) {
     var payload = {actionType: key, response: response};
     if (params) {
@@ -60,7 +62,7 @@ Api.io = {
   socket: null,
   register: function(id){
     if(!this.socket){
-      this.socket = io();
+      this.socket = io(socketIoUrl);
 
       this.socket.on('playlistChange', function(data){
         dispatch(Constants.PLAYLIST_LOADED, {playlist: data.playlist, playlistId: data.id}, {id: data.id});

@@ -9,15 +9,17 @@ var CHANGE_EVENT = 'change';
 
 var _playlist = [];
 var _playlistId = null;
+var _position = -1;
 
 function saved(plId){
   _playlistId = plId;
   history.pushState(null, null, '/'+plId);
 }
 
-function loaded(pl, plId){
+function loaded(pl, plId, pos){
   _playlist = pl;
   _playlistId = plId;
+  _position = (pos === undefined ? _position : pos);
 }
 
 var PlaylistStore = merge(EventEmitter.prototype, {
@@ -28,6 +30,10 @@ var PlaylistStore = merge(EventEmitter.prototype, {
 
   getPlaylistId: function(){
     return _playlistId;
+  },
+
+  getPosition: function(){
+    return _position;
   },
 
   emitChange: function(){
@@ -62,13 +68,13 @@ AppDispatcher.register(function(payload) {
       if(action.response === Constants.request.PENDING){
         /// tururur
       } else if(action.response.playlistId){
-        loaded(action.response.playlist, action.response.playlistId);
+        loaded(action.response.playlist, action.response.playlistId, action.response.position);
         PlaylistStore.emitChange();
       }
       break;
 
     case Constants.PLAYLIST_CHANGE:
-      loaded(action.response.playlist, action.response.playlistId);
+      loaded(action.response.playlist, action.response.playlistId, action.response.position);
       PlaylistStore.emitChange();
       break;
 

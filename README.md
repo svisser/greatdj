@@ -4,7 +4,7 @@ GreatDJ was originally about searching Youtube and creating playlists on the fly
 Lately, though, it has become all sorts of strange things:
 
  * You can save playlists, it creates a unique URL you can share with your best best friends (beware, though, saving overrites!)
- * It has a sync mode, on by default, which will propagate any changes on a (saved) playlist on all devices, even without actually saving the changes to the server. Useful, for instance, if you have it playing in a computer and want to push some tunes using your mobile. Or your friend's mobile. Or if there's dozens of you trying to get your song to play at the same time.
+ * It has a sync mode, on by default, which will propagate any changes on a playlist on all devices, even without actually saving the changes to the server. Useful, for instance, if you have it playing in a computer and want to push some tunes using your mobile. Or your friend's mobile. Or if there's dozens of you trying to get your song to play at the same time.
  * When connecting to a playlist, if there are any other clients connected, you'll always get the latest version, however
  * If changes are not saved and you're the only client, you'll get the saved version from the server.
  * This might all change, I'm not sure.

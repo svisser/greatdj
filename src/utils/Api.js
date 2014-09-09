@@ -65,15 +65,17 @@ Api.io = {
       this.socket = io(socketIoUrl);
 
       this.socket.on('playlistChange', function(data){
-        dispatch(Constants.PLAYLIST_LOADED, {playlist: data.playlist, playlistId: data.id}, {id: data.id});
+        console.log('received playlist changed', data)
+        dispatch(Constants.PLAYLIST_LOADED, {playlist: data.playlist, playlistId: data.id, position: data.position}, {id: data.id});
       });
     }
 
     this.socket.emit('register', {id: id});
 
   },
-  changedPlaylist: function(id, pl){
-    this.socket.emit('changedPlaylist', {id: id, playlist: pl});
+  changedPlaylist: function(id, pl, pos){
+    if(this.socket)
+      this.socket.emit('changedPlaylist', {id: id, playlist: pl, position: pos});
   },
   unregister: function(){
     if(this.socket){

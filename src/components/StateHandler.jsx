@@ -16,9 +16,9 @@ var StateHandler = React.createClass({
     return {
       playlist: PlaylistStore.getPlaylist(),
       results: [],
-      position: -1,
+      position: PlaylistStore.getPosition(),
       playlistId: PlaylistStore.getPlaylistId(),
-      sync: isMobile.any ? true : true,
+      sync: false,
     }
   },
 
@@ -31,7 +31,7 @@ var StateHandler = React.createClass({
     if(url.pathname.length > 1){
       // do a server request with url.hash
       var id = url.pathname.slice(1);
-      PlaylistActions.load(id, true);
+      PlaylistActions.load(id, false);
     }
   },
 
@@ -41,21 +41,28 @@ var StateHandler = React.createClass({
 
   toggleSync: function(){
     var sync = !this.state.sync;
-    PlaylistActions.load(this.state.playlistId, sync);
+
+    if(this.state.playlistId) {
+      PlaylistActions.load(this.state.playlistId, sync);
+    } else if(sync) {
+      PlaylistActions.save(this.state.playlist);
+    }
+
     this.setState({sync: sync});
   },
 
-  setPlaylist: function(pl){
-    PlaylistActions.changedPlaylist(this.state.playlistId, pl)
+  setPlaylist: function(pl){ console.log('set playlist', pl)
+    PlaylistActions.changedPlaylist(this.state.playlistId, pl, this.state.position);
   },
 
-  setPosition: function(p){
-    this.setState({position: p});
+  setPosition: function(p){ console.log('set position', p)
+    PlaylistActions.changedPlaylist(this.state.playlistId, this.state.playlist, p);
   },
 
   playerReady: function(){
+    var that = this;
     if(this.state.playlist.length){
-      this.setPosition(0);
+      setTimeout(function(){that.setPosition(0), 50});
     }
   },
 
@@ -63,6 +70,8 @@ var StateHandler = React.createClass({
     this.setState({
       playlist: PlaylistStore.getPlaylist(),
       playlistId: PlaylistStore.getPlaylistId(),
+      position: PlaylistStore.getPosition(),
+      sync: (PlaylistStore.getPlaylistId() ? this.state.sync : false)
     });
   },
 
@@ -93,7 +102,7 @@ var StateHandler = React.createClass({
             onPlayerReady={this.playerReady}
             mode={this.state.mode} />
         </div>
-        <a id="github-link" href="https://github.com/ruiramos/greatdj" target="_blank" class="desktop">GreatDJ on GitHub</a>
+        <a id="github-link" href="https://github.com/ruiramos/greatdj" target="_blank" className="desktop">GreatDJ on GitHub</a>
       </div>
     )
   }

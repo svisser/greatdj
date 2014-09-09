@@ -44,7 +44,7 @@ var ResultsComponent = React.createClass({
   handlePlaylistAdd: function(newPlaylist){
     var pos = this.props.position;
     if(pos < newPlaylist.length && !this.state.playing){
-      this.playVideoByPos(pos + 1);
+      this.props.setPosition(pos + 1);
     }
   },
 
@@ -60,13 +60,12 @@ var ResultsComponent = React.createClass({
   },
 
   playVideoByPos: function(pos){
-    this.props.setPosition(pos);
     this.setState({videoId: this.props.playlist[pos].videoId, type: 'youtube', playing: true});
   },
 
   handlePlayNow: function(pos, video){
     if(pos !== this.props.position){
-      this.playVideoByPos(pos);
+      this.props.setPosition(pos);
     } else {
       // clicked on the currently playing video
       window.dispatchEvent(new CustomEvent('restartVideo'));

@@ -36,8 +36,10 @@ var Playlist = React.createClass({
       this.ensureActiveSongOnTop();
     }
 
+    var position = this.props.position > 0 ? this.props.position : 0;
+
     this.refs.playlist.getDOMNode().style.height = (this.props.playlistToggled) ?
-      liHeight * +this.props.playlist.length + 6 : liHeight * (this.props.playlist.length - this.props.position) + 6;
+      liHeight * +this.props.playlist.length + 6 : liHeight * (this.props.playlist.length - position) + 6;
 
   },
 

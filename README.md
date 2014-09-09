@@ -4,17 +4,16 @@ GreatDJ was originally about searching Youtube and creating playlists on the fly
 Lately, though, it has become all sorts of strange things:
 
  * You can save playlists, it creates a unique URL you can share with your best best friends (beware, though, saving overrites!)
- * It has a sync mode, on by default, which will propagate any changes on a playlist on all devices, even without actually saving the changes to the server. Useful, for instance, if you have it playing in a computer and want to push some tunes using your mobile. Or your friend's mobile. Or if there's dozens of you trying to get your song to play at the same time.
- * When connecting to a playlist, if there are any other clients connected, you'll always get the latest version, however
- * If changes are not saved and you're the only client, you'll get the saved version from the server.
+ * It has a party mode, disabled by default, which syncs the playlist and playing position across all the devices in this mode currently on that playlist. Useful, for instance, if you have it playing in a computer and want to push some tunes using your phone. Or your friend's phone. Or if there's dozens of you trying to get your songs to play at the same time.
+ * If you enable party mode, if there are other clients connected you'll sync with the latest version they have, which might be different from the one saved in the server.
+ * If you don't enable party mode, you'll always get the saved version.
  * This might all change, I'm not sure.
 
-Built using Facebook's React, Socket.IO, Browserify, Gulp and a bunch of other cool buzzwords.
+Built using Facebook's React, Socket.IO, Browserify, Gulp and a bunch of other cool tech.
 Requires MongoDB for saving and loading playlists.
 
 ## Demo
 [http://greatdj.ruiramos.com] (http://greatdj.ruiramos.com/)
-Feel free to use it! :)
 
 ## Development
 
@@ -50,7 +49,8 @@ In order to run it locally you'll need to:
     ```sh
     $ gulp build
     ```
-`
+
+* Check the deploy batch script.
 
 ## Contributing
 

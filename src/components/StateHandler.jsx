@@ -31,7 +31,7 @@ var StateHandler = React.createClass({
     if(url.pathname.length > 1){
       // do a server request with url.hash
       var id = url.pathname.slice(1);
-      PlaylistActions.load(id, false);
+      PlaylistActions.load(id);
     }
   },
 
@@ -42,11 +42,22 @@ var StateHandler = React.createClass({
   toggleSync: function(){
     var sync = !this.state.sync;
 
-    if(this.state.playlistId) {
-      PlaylistActions.load(this.state.playlistId, sync);
-    } else if(sync) {
-      PlaylistActions.save(this.state.playlist);
+    if(sync){
+      if(!this.state.playlistId)
+        PlaylistActions.save(this.state.playlist);
+
+      PlaylistActions.sync(this.state.playlistId);
+
+    } else {
+      PlaylistActions.unsync();
     }
+
+    // if(this.state.playlistId) {
+    //   PlaylistActions.load(this.state.playlistId);
+    //   PlaylistActions.sync(this.state.playlistId);
+    // } else if(sync) {
+    //   PlaylistActions.save(this.state.playlist);
+    // }
 
     this.setState({sync: sync});
   },

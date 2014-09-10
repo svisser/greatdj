@@ -32,30 +32,17 @@ app.post('/p', function(req, res){
 
   if(req.body.id){
     // update - just overwrite for now
-    // db.collection('playlists').findOne({id: req.body.id}, function(err, obj){
-    //   if(obj && obj.ip === ip){
-    //     playlistController.update(req.body.id, req.body, res);
-    //   } else {
-    //     var data = req.body;
-    //     data.ip = ip;
-    //     playlist.insert(data, res);
-    //   }
-    // });
-    playlistController.update(req.body.id, req.body, res);
+    playlistController.update(req.body.id, req.body, res.send.bind(res));
   } else {
     // insert new record
     var data = req.body;
     data.ip = ip;
-    playlistController.insert(data, res);
+    playlistController.insert(data, res.send.bind(res));
   }
 });
 
 app.get('/p', function(req, res){
-  var collection = db.collection('playlists');
-
-  collection.findOne({id: req.query.id}, function(err, item) {
-    res.send(item);
-  });
+  playlistController.get(req.query.id, res.send.bind(res));
 });
 
 app.get('*', function(req, res){
@@ -87,15 +74,11 @@ io.on('connection', function(socket){
 
     if(playlistClients[data.id].length > 1 && latestVersion[data.id]){
       socket.emit('playlistChange', latestVersion[data.id]);
+    } else {
+      playlistController.get(data.id, function(data){
+        socket.emit('playlistChange', data);
+      });
     }
-
-    // check if there's a newer version of the playlist available and send it to him
-    // if(data.sync && playlistClients[data.id].length > 1 && latestVersion[data.id]){
-    //   socket.emit('playlistChange', latestVersion[data.id]);
-    // } else {
-      //lastestVersion[data.id] = null;
-    //}
-    // how to invalidate ?
 
   });
 
@@ -149,7 +132,7 @@ io.on('connection', function(socket){
 });
 
 // playlist controllers controllers - get them out of here some day
-playlistController.insert = function(data, res){
+playlistController.insert = function(data, callback){
   var id = Math.random().toString(36).slice(3,9); // revisit
   var geo = geoip.lookup(data.ip);
 
@@ -157,14 +140,20 @@ playlistController.insert = function(data, res){
 
   db.collection('playlists').insert(doc, {w:1}, function(err, result) {
     console.log('insert ok ', id);
-    res.send({operation: 'insert', id: id});
+    callback({operation: 'insert', id: id});
   });
 };
 
-playlistController.update = function(id, data, res){
+playlistController.update = function(id, data, callback){
   db.collection('playlists').update({id: id}, {$set:{playlist: data.playlist}}, {w:1}, function(err, result) {
     console.log('update ok ', id);
-    res.send({operation: 'update', id: id});
+    callback({operation: 'update', id: id});
+  });
+};
+
+playlistController.get = function(id, callback){
+  db.collection('playlists').findOne({id: id}, function(err, item) {
+    callback(item);
   });
 };
 

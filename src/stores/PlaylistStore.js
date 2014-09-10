@@ -68,12 +68,15 @@ AppDispatcher.register(function(payload) {
       if(action.response === Constants.request.PENDING){
         /// tururur
       } else if(action.response.playlistId){
+        console.log('playlist loaded', action.response);
         loaded(action.response.playlist, action.response.playlistId, action.response.position);
         PlaylistStore.emitChange();
       }
       break;
 
     case Constants.PLAYLIST_CHANGE:
+            console.log('playlist change', action.response);
+
       loaded(action.response.playlist, action.response.playlistId, action.response.position);
       PlaylistStore.emitChange();
       break;

@@ -27,10 +27,6 @@ var Api = {
       .end(function(err, response){
         if(!err && response.body.id){
           dispatch(key, {playlistId: response.body.id}, params);
-
-          console.log('save playlist register');
-          Api.io.register(response.body.id);
-
         } else {
           dispatch(key, Constants.request.ERROR, params);
         }
@@ -79,6 +75,7 @@ Api.io = {
   },
   unregister: function(){
     if(this.socket){
+      this.socket.off('playlistChange');
       this.socket.emit('unregister');
       this.socket = null;
     }

@@ -20,19 +20,22 @@ var PlaylistActions = {
   /**
    * @param  {string} id
    */
-  load: function(plId, sync) {
-    console.log('load', plId, sync)
-
+  load: function(plId) {
+    console.log('load', plId);
     Api.loadPlaylist(plId);
-    if(sync)
-      Api.io.register(plId);
-    else
-      Api.io.unregister();
+  },
 
+  sync: function(plId){
+    console.log('sync', plId);
+    Api.io.register(plId);
+  },
+
+  unsync: function(){
+    console.log('unsync');
+    Api.io.unregister();
   },
 
   changedPlaylist: function(plId, pl, pos){
-    console.log('changed playlist', plId, pl, pos)
     AppDispatcher.handleViewAction({
       actionType: Constants.PLAYLIST_CHANGE,
       response:{
@@ -53,7 +56,7 @@ var PlaylistActions = {
       actionType: Constants.UNSET_PLAYLIST_ID,
     });
 
-    Api.io.unregister();
+    PlaylistActions.unsync();
   }
 
 };

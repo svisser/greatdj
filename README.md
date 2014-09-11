@@ -13,7 +13,7 @@ Built using Facebook's React, Socket.IO, Browserify, Gulp and a bunch of other c
 Requires MongoDB for saving and loading playlists.
 
 ## Demo
-[http://greatdj.ruiramos.com] (http://greatdj.ruiramos.com/)
+[http://great.dj] (http://great.dj/)
 
 ## Development
 

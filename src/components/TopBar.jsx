@@ -30,7 +30,14 @@ var TopBar = React.createClass({
 
   handleSubmit: function(e){
     if(e) e.preventDefault();
-    this.props.handleSubmit(this.refs.query.getDOMNode().value.trim(), this.refs.hd.getDOMNode().checked);
+
+    if(this.refs.query.getDOMNode().value.trim()){
+      if(autoCompleteTimeout){
+        clearTimeout(autoCompleteTimeout);
+      }
+
+      this.props.handleSubmit(this.refs.query.getDOMNode().value.trim(), this.refs.hd.getDOMNode().checked);
+    }
 
     // reset autocomplete
     this.setState({complete: [], selected: -1});

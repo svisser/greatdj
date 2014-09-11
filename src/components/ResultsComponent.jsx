@@ -31,6 +31,7 @@ var ResultsComponent = React.createClass({
       playlist.splice(currPos + 1, 0, e.detail);
       that.props.setPlaylist(playlist);
 
+      that.props.setPosition(currPos + 1);
       that.playVideoByPos(currPos + 1);
     }, false);
   },

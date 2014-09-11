@@ -52,13 +52,6 @@ var StateHandler = React.createClass({
       PlaylistActions.unsync();
     }
 
-    // if(this.state.playlistId) {
-    //   PlaylistActions.load(this.state.playlistId);
-    //   PlaylistActions.sync(this.state.playlistId);
-    // } else if(sync) {
-    //   PlaylistActions.save(this.state.playlist);
-    // }
-
     this.setState({sync: sync});
   },
 

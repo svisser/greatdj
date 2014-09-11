@@ -19,7 +19,7 @@ function saved(plId){
 function loaded(pl, plId, pos){
   _playlist = pl;
   _playlistId = plId;
-  _position = (pos === undefined ? _position : pos);
+  _position = (pos === undefined ? _position : pos); // zero is a valid value!
 }
 
 var PlaylistStore = merge(EventEmitter.prototype, {
